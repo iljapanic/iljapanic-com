@@ -45,6 +45,11 @@ export const Note = defineDocumentType(() => ({
 			of: { type: 'string' },
 			required: false,
 		},
+		hideHeader: {
+			type: 'boolean',
+			description: 'Whether the header should be hidden',
+			required: false,
+		},
 	},
 	computedFields: {
 		slug: {

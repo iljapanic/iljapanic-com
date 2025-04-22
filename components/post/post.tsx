@@ -7,7 +7,7 @@ import type { Article, Page, Note, Post } from 'contentlayer/generated'
 
 import { cn } from '@/lib/utils'
 import { PostToc } from '@/components/post/post-toc'
-import { LinkPreview } from '@/components/ui/link-preview'
+// import { LinkPreview } from '@/components/ui/link-preview'
 
 export function Post({
 	post,
@@ -20,7 +20,6 @@ export function Post({
 
 	return (
 		<article className={cn('post-wrapper mx-auto', className)}>
-
 			{/* post header */}
 			{post.hideHeader ? null : (
 				<PostHeader
@@ -48,13 +47,11 @@ export function Post({
 
 			{/* {post.type === 'Article' && <PostToc />} */}
 
-			<div className={cn(
-			post.hideHeader ? null : 'mt-16',
-			)}>
+			<div className={cn(post.hideHeader ? null : 'mt-16')}>
 				<MDXContent components={mdxComponents} />
 			</div>
 
-			{post.type === 'Note' && (
+			{/* {post.type === 'Note' && (
 				<div className="mt-16">
 					<h2 className="">Links</h2>
 					<ul className="space-y-4">
@@ -65,7 +62,7 @@ export function Post({
 						))}
 					</ul>
 				</div>
-			)}
+			)} */}
 		</article>
 	)
 }
