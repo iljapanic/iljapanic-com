@@ -37,6 +37,7 @@ yarn-error.log*
 next-env.d.ts
 
 node_modules
-.obsidian
+.obsidian/
+content/.obsidian
 
 .env
