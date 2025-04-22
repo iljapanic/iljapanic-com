@@ -7,7 +7,7 @@ import { PostsList } from '@/components/post/posts-list'
 import { PostHeader } from '@/components/post/post-header'
 
 export const metadata = {
-	title: 'Writing',
+	title: 'Long-form writing',
 	description: '',
 }
 
@@ -16,12 +16,6 @@ export const dynamic = 'force-dynamic'
 export default async function Page() {
 	const articles = await allArticles
 		.filter((article) => article.isPublished)
-		.sort((a, b) =>
-			compareDesc(new Date(a.publishedAt ?? 0), new Date(b.publishedAt ?? 0)),
-		)
-
-	const notes = await allNotes
-		.filter((note) => note.isPublished)
 		.sort((a, b) =>
 			compareDesc(new Date(a.publishedAt ?? 0), new Date(b.publishedAt ?? 0)),
 		)
@@ -35,16 +29,6 @@ export default async function Page() {
 			/>
 			<section className="mt-12">
 				{articles && articles.length > 0 && <PostsList posts={articles} />}
-			</section>
-			{/* <hr className="my-20" /> */}
-			<PostHeader
-				asH2
-				title="Notes"
-				subtitle="A loosely tended collection of living notes, fleeting thoughts and ideas"
-				className="mt-20"
-			/>
-			<section className="mt-12">
-				{notes && notes.length > 0 && <PostsList posts={notes} />}
 			</section>
 		</div>
 	)

@@ -30,6 +30,11 @@ export const Page = defineDocumentType(() => ({
 			description: 'The subtitle of the page',
 			required: false,
 		},
+		hideHeader: {
+			type: 'boolean',
+			description: 'Whether the header should be hidden',
+			required: false,
+		},
 	},
 	computedFields: {
 		slug: {

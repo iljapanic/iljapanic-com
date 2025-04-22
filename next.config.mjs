@@ -103,36 +103,4 @@ const redirects = [
 		destination: '/not-so-smart-city',
 		permanent: true,
 	},
-
-	/* garden -> {root} */
-	{
-		source: '/garden',
-		destination: '/notes',
-		permanent: true,
-	},
-	{
-		source: '/garden/:slug*',
-		destination: '/:slug*',
-		permanent: true,
-	},
-	{
-		source: '/garden/chatgpt/',
-		destination: '/chatgpt',
-		permanent: true,
-	},
-	{
-		source: '/garden/digital-gardening/',
-		destination: '/digital-gardening',
-		permanent: true,
-	},
-	{
-		source: '/garden/networked-note-taking/',
-		destination: '/networked-note-taking',
-		permanent: true,
-	},
-	{
-		source: '/garden/tools-for-thought/',
-		destination: '/tools-for-thought',
-		permanent: true,
-	},
 ]

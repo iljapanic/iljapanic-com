@@ -114,5 +114,14 @@
 		--radius: 0.35rem;
 		--post-width: 36rem;
 		--post-wide-width: 44rem;
+
+		--microlink-background-color: var(--sand-3);
+		--microlink-border-style: solid;
+		--microlink-border-width: 1px;
+		--microlink-border: 1px solid var(--border);
+		--microlink-color: var(--foreground);
+		--microlink-hover-background-color: var(--sand-5);
+		--microlink-hover-border-color: var(--border);
+		--microlink-max-width: 500px;
 	}
 }

@@ -26,7 +26,7 @@ export default async function Page() {
 		<div className="post-wrapper mx-auto">
 			<section>
 				<p className="font-serif italic">
-					Crafting bespoke software and product experiences.
+					Crafting intentional software experiences.
 				</p>
 				<p className="mt-1 font-serif italic">
 					Exploring the intersection of people, technologies and living systems.

@@ -18,6 +18,7 @@ const contentLayerConfig = makeSource({
 		'notes/_drafts',
 		'articles/_drafts',
 		'posts/_drafts',
+		'_templates',
 
 		/* MDX snippets to be used manually via native Nextjs components */
 		'snippets',

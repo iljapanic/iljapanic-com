@@ -2,7 +2,7 @@ import { defineDocumentType } from 'contentlayer2/source-files'
 
 export const Note = defineDocumentType(() => ({
 	name: 'Note',
-	filePathPattern: `notes/**/*.mdx`,
+	filePathPattern: `notes/**/*.{mdx,md}`,
 	contentType: 'mdx',
 	fields: {
 		title: {
@@ -25,6 +25,11 @@ export const Note = defineDocumentType(() => ({
 			description: 'The date the note was last updated',
 			required: false,
 		},
+		createdAt: {
+			type: 'date',
+			description: 'The date the note was created',
+			required: false,
+		},
 		isPublished: {
 			type: 'boolean',
 			description: 'Whether the note is published',
@@ -35,11 +40,16 @@ export const Note = defineDocumentType(() => ({
 			of: { type: 'string' },
 			required: false,
 		},
+		links: {
+			type: 'list',
+			of: { type: 'string' },
+			required: false,
+		},
 	},
 	computedFields: {
 		slug: {
 			type: 'string',
-			resolve: (post) => post._raw.sourceFileName.replace(/\.mdx$/, ''),
+			resolve: (post) => post._raw.sourceFileName.replace(/\.(mdx|md)$/, ''),
 		},
 	},
 }))

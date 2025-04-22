@@ -44,9 +44,9 @@ export function PostHeader({
 
 			{/* title */}
 			{asH2 ? (
-				<h2 className="mb-0">{title}</h2>
+				<h2 className="mb-0 mt-0">{title}</h2>
 			) : (
-				<h1 className="mb-0">{title}</h1>
+				<h1 className="mb-0 mt-0">{title}</h1>
 			)}
 
 			{/* subtitle (optional) */}
