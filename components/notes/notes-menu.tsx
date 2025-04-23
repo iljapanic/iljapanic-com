@@ -69,6 +69,7 @@ export async function NotesMenu({
 								isCurrent={isCurrent(note)}
 								slug={note.slug}
 								children={note.title}
+								wordCount={note.wordCount}
 							/>
 						</li>
 					))}
@@ -98,6 +99,7 @@ export async function NotesMenu({
 												isCurrent={isCurrent(note)}
 												slug={note.slug}
 												children={note.title}
+												wordCount={note.wordCount}
 											/>
 										</li>
 									))}
@@ -115,11 +117,27 @@ function NotesMenuLink({
 	isCurrent,
 	slug,
 	children,
+	wordCount,
 }: {
 	isCurrent: boolean
 	slug: string
 	children: React.ReactNode
+	wordCount: number
 }) {
+	const getWordCountIndicator = (wordCount: number) => {
+		if (wordCount < 100) {
+			return '●'
+		} else if (wordCount < 300) {
+			return '●●'
+		} else if (wordCount < 600) {
+			return '●●●'
+		} else if (wordCount > 1000 && wordCount < 3000) {
+			return '●●●●'
+		} else if (wordCount > 3000) {
+			return '●●●●●'
+		}
+	}
+
 	return (
 		<Link
 			href={`/${slug}`}
@@ -129,6 +147,9 @@ function NotesMenuLink({
 			)}
 		>
 			{children}
+			<span className="ml-2 text-[9px] text-muted-foreground/40">
+				{getWordCountIndicator(wordCount)}
+			</span>
 		</Link>
 	)
 }

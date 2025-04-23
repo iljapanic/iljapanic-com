@@ -63,5 +63,13 @@ export const Note = defineDocumentType(() => ({
 				return parts.length > 2 ? parts[1] : '_root'
 			},
 		},
+		wordCount: {
+			type: 'number',
+			description: 'Number of words in the document',
+			resolve: (doc) => {
+				const content = doc.body.raw
+				return content.split(/\s+/).filter(Boolean).length
+			},
+		},
 	},
 }))
