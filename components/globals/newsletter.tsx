@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/utils'
+import { subscribeToNewsletter } from '@/lib/buttondown'
 
 export function Newsletter({ className }: { className?: string }) {
 	const [email, setEmail] = useState('')
@@ -25,21 +26,19 @@ export function Newsletter({ className }: { className?: string }) {
 		setErrorMessage('')
 
 		try {
-			const formData = new FormData(e.currentTarget)
-			const response = await fetch(
-				'https://buttondown.email/api/emails/embed-subscribe/iljapanic',
-				{
-					method: 'POST',
-					body: formData,
-				},
-			)
+			const result = await subscribeToNewsletter(email)
 
-			if (response.ok) {
+			if (result.success) {
 				setStatus('subscribed')
 				setEmail('')
 			} else {
-				const data = await response.json()
-				throw new Error(data.message || 'Something went wrong')
+				setStatus('error')
+				setErrorMessage(result.error?.message || 'An unexpected error occurred')
+
+				// If they're already subscribed, we can show a more user-friendly message
+				if (result.error?.code === 'already_subscribed') {
+					setErrorMessage('This email is already subscribed to the newsletter.')
+				}
 			}
 		} catch (error) {
 			setStatus('error')
@@ -51,10 +50,11 @@ export function Newsletter({ className }: { className?: string }) {
 
 	return (
 		<div className={cn(className)}>
-			<p>
-				Occasional updates and musings about people, design and technology.
-			</p>
-			<form onSubmit={handleSubmit} className="mt-4 flex flex-col gap-2">
+			<p>Occasional updates and musings about people, design and technology.</p>
+			<form
+				onSubmit={handleSubmit}
+				className="mt-4 flex max-w-sm flex-col gap-2"
+			>
 				<div className="flex gap-2">
 					<Input
 						type="email"

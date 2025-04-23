@@ -1,11 +1,12 @@
 ---
-title: design engineering
+title: Design egineering
 publishedAt: 2024-04-29T22:00:00.000Z
-updatedAt: 2024-04-29T22:00:00.000Z
+updatedAt: 2025-04-23
 keywords:
   - design engineering
   - software design
 isPublished: true
+createdAt: 2024-04-29
 ---
 
 ## People

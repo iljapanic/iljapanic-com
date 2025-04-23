@@ -1,7 +1,9 @@
 ---
-title: tools for thought
+title: Tools for thought
 publishedAt: 2021-08-10T22:00:00.000Z
 isPublished: false
+createdAt: 2023-05-16
+updatedAt: 2025-04-23
 ---
 
 ## People

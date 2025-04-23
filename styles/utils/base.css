@@ -63,7 +63,7 @@
 	}
 
 	pre {
-		@apply max-w-full overflow-scroll rounded-sm bg-muted px-2 py-2 text-sm;
+		@apply max-w-full overflow-scroll text-wrap rounded bg-muted p-4 text-xs;
 	}
 
 	blockquote {

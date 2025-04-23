@@ -1,12 +1,16 @@
 ---
-title: permacomputing
+title: Permacomputing
 createdAt: 2025-04-22
 updatedAt: 2025-04-23
 isPublished: true
 publishedAt: 2025-04-22
 ---
 
-> Permacomputing is both a concept and a community of practice oriented around issues of resilience and regenerativity in computer and network technology inspired by permaculture. 
+
+<Quote author="Permacomputing wiki" url="https://permacomputing.net/">
+	Permacomputing is both a concept and a community of practice oriented around issues of resilience and regenerativity in computer and network technology inspired by permaculture. 
+</Quote>
+
 
 ## Projects
 

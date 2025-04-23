@@ -3,6 +3,8 @@ import { makeSource } from 'contentlayer2/source-files'
 import rehypeSlug from 'rehype-slug'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import remarkGfm from 'remark-gfm'
+import rehypePrettyCode from 'rehype-pretty-code'
+import wikiLinkPlugin from 'remark-wiki-link'
 
 import { Article } from './schema/contentlayer/article'
 import { Note } from './schema/contentlayer/note'
@@ -27,9 +29,21 @@ const contentLayerConfig = makeSource({
 		'singletons',
 		'books',
 		'tools',
+
+		/* obsidian vault settings */
+		'.obsidian',
 	],
 	mdx: {
 		rehypePlugins: [
+			// [
+			// 	rehypePrettyCode,
+			// 	{
+			// 		theme: {
+			// 			dark: 'github-dark-dimmed',
+			// 			light: 'github-light',
+			// 		},
+			// 	},
+			// ],
 			rehypeSlug,
 			[
 				rehypeAutolinkHeadings,
@@ -40,7 +54,16 @@ const contentLayerConfig = makeSource({
 				},
 			],
 		],
-		remarkPlugins: [remarkGfm],
+		remarkPlugins: [
+			remarkGfm,
+			[
+				wikiLinkPlugin,
+				{
+					aliasDivider: '|',
+					hrefTemplate: (permalink: string) => `/${permalink}`,
+				},
+			],
+		],
 	},
 })
 

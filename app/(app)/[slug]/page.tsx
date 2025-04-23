@@ -1,8 +1,6 @@
-import { allDocuments, allPages } from 'contentlayer/generated'
-import { useMDXComponent } from 'next-contentlayer2/hooks'
+import { allDocuments } from 'contentlayer/generated'
 import { notFound } from 'next/navigation'
 
-import { mdxComponents } from '@/components/mdx/mdx-components'
 import { Post } from '@/components/post/post'
 
 interface MetaObject {

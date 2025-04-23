@@ -6,6 +6,8 @@
 	:root,
 	.light,
 	.light-theme {
+		--brand: 6deg 63.83% 36.86%;
+
 		--sand-1: 60deg 20% 99%;
 		--sand-2: 60deg 7.7% 97.5%;
 		--sand-3: 30deg 6.7% 94.1%;
@@ -47,6 +49,8 @@
 	}
 	.dark,
 	.dark-theme {
+		--brand: 6.1935deg 76.355% 60.196%;
+
 		--sand-1: 60deg 3% 6.5%;
 		--sand-2: 60deg 2% 9.6%;
 		--sand-3: 60deg 1.5% 13.1%;
@@ -109,6 +113,8 @@
 		--border: var(--sand-6);
 		--input: var(--sand-6);
 		--ring: var(--sand-7);
+
+		/* --brand: var(--brand); */
 
 		--highlight: 48 100% 50%;
 		--radius: 0.35rem;

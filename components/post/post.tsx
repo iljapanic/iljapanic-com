@@ -2,17 +2,12 @@ import { useMDXComponent } from 'next-contentlayer2/hooks'
 
 import { PostHeader } from '@/components/post/post-header'
 import { mdxComponents } from '@/components/mdx/mdx-components'
+import { NotesMenu, NotesMenuMobile } from '@/components/notes/notes-menu'
 
 import type { Article, Page, Note, Post } from 'contentlayer/generated'
 
 import { cn } from '@/lib/utils'
-import { PostToc } from '@/components/post/post-toc'
-import { allNotes } from '@/.contentlayer/generated/index.mjs'
-import { compareDesc, format, parseISO } from 'date-fns'
-import Link from 'next/link'
-
-// Helper function to capitalize first letter
-const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)
+import { format, parseISO } from 'date-fns'
 
 export async function Post({
 	post,
@@ -23,36 +18,8 @@ export async function Post({
 }) {
 	const MDXContent = useMDXComponent(post.body.code)
 
-	const notes = await allNotes.filter((note) => note.isPublished)
-	// No initial sort needed here, we sort after grouping
-
-	// Group notes by directory path
-	const groupedNotes = notes.reduce(
-		(acc, note) => {
-			const key = note.directoryPath || '_root' // Use '_root' if directoryPath is null/undefined
-			if (!acc[key]) {
-				acc[key] = []
-			}
-			acc[key].push(note)
-			return acc
-		},
-		{} as Record<string, Note[]>,
-	)
-
-	// Sort notes within each group alphabetically by title
-	Object.keys(groupedNotes).forEach((key) => {
-		groupedNotes[key].sort((a, b) => a.title.localeCompare(b.title))
-	})
-
-	// Sort group keys alphabetically, putting '_root' first
-	const sortedGroupKeys = Object.keys(groupedNotes).sort((a, b) => {
-		if (a === '_root') return -1
-		if (b === '_root') return 1
-		return a.localeCompare(b)
-	})
-
 	return (
-		<article className={cn('post-wrapper mx-auto', className)}>
+		<article className={cn('post-wrapper relative mx-auto', className)}>
 			{/* post header */}
 			{post.hideHeader ? null : (
 				<PostHeader
@@ -61,7 +28,6 @@ export async function Post({
 					date={post.publishedAt}
 					showDate={post.type === 'Article' || post.type === 'Post'}
 					postType={post.type}
-					showPostType={post.type === 'Article' || post.type === 'Post'}
 				/>
 			)}
 
@@ -77,7 +43,7 @@ export async function Post({
 
 			{/* {post.type === 'Article' && <PostToc />} */}
 
-			<div className={cn(post.hideHeader ? null : 'mt-8')}>
+			<div className={cn('post-content', post.hideHeader ? null : 'mt-8')}>
 				<MDXContent components={mdxComponents} />
 			</div>
 
@@ -91,59 +57,17 @@ export async function Post({
 				</div>
 			)}
 
-			{/* floating desktop links */}
-			{post.type === 'Note' && (
-				<div className="fixed left-12 top-[28vh] hidden lg:block">
-					<h3 className="font-serif text-sm italic text-foreground/90">
-						Garden
-					</h3>
-					<ul className="mt-2 space-y-1">
-						{sortedGroupKeys.map((key) => {
-							const groupNotes = groupedNotes[key]
-							if (key === '_root') {
-								// Render root notes directly
-								return groupNotes.map((note) => (
-									<li key={note.title}>
-										<Link
-											href={`/${note.slug}`}
-											className={cn(
-												'text-sm text-foreground/60 no-underline',
-												note.slug === post.slug &&
-													'font-medium text-foreground',
-											)}
-										>
-											{note.title}
-										</Link>
-									</li>
-								))
-							} else {
-								// Render directory group
-								return (
-									<li key={key} className="pt-1">
-										<span className="text-sm font-medium text-foreground/80">
-											{capitalize(key)} {/* Capitalize directory name */}
-										</span>
-										<ul className="ml-2 mt-1 space-y-1 border-l border-border pl-3">
-											{groupNotes.map((note) => (
-												<li key={note.title}>
-													<Link
-														href={`/${note.slug}`}
-														className={cn(
-															'text-sm text-foreground/60 no-underline',
-															note.slug === post.slug &&
-																'font-medium text-foreground',
-														)}
-													>
-														{note.title}
-													</Link>
-												</li>
-											))}
-										</ul>
-									</li>
-								)
-							}
-						})}
-					</ul>
+			{/* Render NotesAccordion for Note type posts */}
+			{(post.type === 'Note' || post.slug === 'garden') && (
+				<div>
+					{/* desktop */}
+					<div className="fixed left-0 top-0 hidden h-[100vh] w-[280px] items-center overflow-scroll border-border py-24 pl-10 opacity-60 lg:flex">
+						<NotesMenu currentPageSlug={post.slug} />
+					</div>
+					{/* mobile */}
+					<div className="fixed bottom-4 left-4 z-50 lg:hidden">
+						<NotesMenuMobile currentPageSlug={post.slug} />
+					</div>
 				</div>
 			)}
 		</article>

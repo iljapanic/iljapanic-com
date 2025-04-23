@@ -1,5 +1,5 @@
 ---
-title: digital gardening
+title: Digital gardening
 publishedAt: 2021-05-18T22:00:00.000Z
 keywords:
   - digital gardening
@@ -7,6 +7,8 @@ keywords:
   - knowledge management
   - productivity
 isPublished: true
+createdAt: 2023-05-16
+updatedAt: 2025-04-23
 ---
 
 <Quote author="Maggie Appleton" url="https://maggieappleton.com/garden-history">

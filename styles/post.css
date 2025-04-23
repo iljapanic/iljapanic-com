@@ -19,21 +19,21 @@
     @apply text-center;
   } */
 
-	.post ul {
+	.post-content ul {
 		@apply mt-2 list-none;
 		/* line-height: 1.6; */
 	}
 
-	.post li {
+	.post-content li {
 		@apply mt-2 flex gap-2;
 	}
 
-	.post ul li::before {
+	.post-content ul li::before {
 		content: '–';
 		@apply inline-block;
 	}
 
-	.post pre {
-		@apply my-4;
+	.post-content pre {
+		@apply my-3;
 	}
 }

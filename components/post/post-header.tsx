@@ -22,7 +22,7 @@ export function PostHeader({
 	showDate = false,
 	asH2 = false,
 	className,
-	showPostType = true,
+	showPostType = false,
 }: PostHeaderProps) {
 	return (
 		<header className={cn(className)}>

@@ -2,7 +2,7 @@ import { defineDocumentType } from 'contentlayer2/source-files'
 
 export const Page = defineDocumentType(() => ({
 	name: 'Page',
-	filePathPattern: `pages/**/*.mdx`,
+	filePathPattern: `pages/**/*.{mdx,md}`,
 	contentType: 'mdx',
 	fields: {
 		title: {
@@ -25,6 +25,11 @@ export const Page = defineDocumentType(() => ({
 			description: 'The date of the page was last updated',
 			required: false,
 		},
+		createdAt: {
+			type: 'date',
+			description: 'The date of the page was created',
+			required: false,
+		},
 		subtitle: {
 			type: 'string',
 			description: 'The subtitle of the page',
@@ -39,7 +44,7 @@ export const Page = defineDocumentType(() => ({
 	computedFields: {
 		slug: {
 			type: 'string',
-			resolve: (post) => post._raw.sourceFileName.replace(/\.mdx$/, ''),
+			resolve: (post) => post._raw.sourceFileName.replace(/\.(mdx|md)$/, ''),
 		},
 	},
 }))

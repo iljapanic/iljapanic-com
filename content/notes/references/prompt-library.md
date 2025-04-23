@@ -1,5 +1,5 @@
 ---
-title: prompt library
+title: Prompt library
 createdAt: 2023-09-20
 updatedAt: 2025-04-23
 publishedAt: 2025-04-12

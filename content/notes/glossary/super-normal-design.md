@@ -1,5 +1,5 @@
 ---
-title: super normal design
+title: Super normal design
 createdAt: 2025-04-09
 publishedAt: 2025-04-09
 updatedAt: 2025-04-23

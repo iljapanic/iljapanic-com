@@ -1,5 +1,5 @@
 ---
-title: symbiotic real
+title: Symbiotic real
 createdAt: 2025-03-12
 publishedAt: 2025-03-12
 updatedAt: 2025-04-23
