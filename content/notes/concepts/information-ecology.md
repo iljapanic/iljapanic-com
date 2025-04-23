@@ -2,7 +2,7 @@
 title: Information ecology
 createdAt: 2025-03-12
 publishedAt: 2025-03-12
-updatedAt: 2025-04-23
+updatedAt: 2025-04-24
 isPublished: true
 ---
 

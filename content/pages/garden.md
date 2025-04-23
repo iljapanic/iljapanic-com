@@ -1,19 +1,12 @@
 ---
 title: Garden
-updatedAt: 2025-04-23
+updatedAt: 2025-04-24
 isPublished: true
 publishedAt: 2025-04-23
-subtitle: A few notes on how this site was made
+subtitle: An experiment with working in public
 createdAt: 2025-04-23
 ---
 
-A living collection of notes, ideas and thoughts I tend to return to. 
+Welcome to my [[digital-gardening|digital garden]], a living collection of notes, ideas and explorations. Think scratch pad rather than polished essays.
 
-
-It works as a quick reference guide. A way of collecting ideas and resources for myself and others.
-
-They are often rough and unpolished. Read more about [[digital-gardening|Digital Gardening]].
-
-
-
-
+The garden functions as a quick reference guide and starting point for further explorations. A way of collecting ideas and resources both for myself and others.

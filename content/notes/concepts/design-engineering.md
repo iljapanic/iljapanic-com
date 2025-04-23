@@ -1,7 +1,7 @@
 ---
 title: Design egineering
 publishedAt: 2024-04-29T22:00:00.000Z
-updatedAt: 2025-04-23
+updatedAt: 2025-04-24
 keywords:
   - design engineering
   - software design

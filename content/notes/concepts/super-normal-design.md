@@ -2,7 +2,7 @@
 title: Super normal design
 createdAt: 2025-04-09
 publishedAt: 2025-04-09
-updatedAt: 2025-04-23
+updatedAt: 2025-04-24
 isPublished: true
 links:
   - https://jaspermorrison.com/exhibitions/2000-2009/super-normal
