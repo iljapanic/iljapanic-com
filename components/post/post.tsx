@@ -65,7 +65,7 @@ export async function Post({
 						<NotesMenu currentPageSlug={post.slug} />
 					</div>
 					{/* mobile */}
-					<div className="fixed bottom-4 left-4 z-50 lg:hidden">
+					<div className="fixed bottom-4 left-0 right-0 z-50 flex w-full justify-center lg:hidden">
 						<NotesMenuMobile currentPageSlug={post.slug} />
 					</div>
 				</div>

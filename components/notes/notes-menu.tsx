@@ -162,8 +162,11 @@ export function NotesMenuMobile({
 	return (
 		<Popover>
 			<PopoverTrigger asChild>
-				<Button size="icon" className="rounded-full shadow">
-					<HamburgerMenuIcon className="h-5 w-5" />
+				<Button
+					className="gap-1.5 rounded-full font-serif italic shadow-lg"
+					size="sm"
+				>
+					<HamburgerMenuIcon className="h-4 w-4" /> Garden
 				</Button>
 			</PopoverTrigger>
 			<PopoverContent>
