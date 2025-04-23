@@ -7,7 +7,7 @@ import { PostHeader } from '@/components/post/post-header'
 
 export const metadata = {
 	title: 'Garden',
-	description: '',
+	description: 'A loosely tended digital garden',
 }
 
 export const dynamic = 'force-dynamic'
@@ -19,10 +19,12 @@ export default async function Page() {
 
 	return (
 		<div className="post-wrapper mx-auto">
-			<PostHeader
-				title="Garden"
-				subtitle="A loosely tended collection of living notes and fleeting thoughts I tend to return to. It works as a quick reference guide. A way of collecting ideas and resources for myself and others."
-			/>
+			<PostHeader title="Garden" subtitle="A loosely tended digital garden" />
+			<p className="mt-4">
+				A collection of fleeting thoughts and livings notes I tend to return to.
+				It works as a quick reference guide. A way of collecting ideas and
+				resources for myself and others.
+			</p>
 			<section className="mt-12">
 				{notes && notes.length > 0 && (
 					<PostsList posts={notes} showDate={false} />

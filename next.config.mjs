@@ -17,6 +17,11 @@ const nextConfig = withPlausibleProxy()({
 				hostname: 'iljapanic-com.s3.eu-central-1.amazonaws.com',
 				pathname: '**',
 			},
+			{
+				protocol: 'https',
+				hostname: 'www.google.com',
+				pathname: '**',
+			},
 		],
 	},
 	async redirects() {

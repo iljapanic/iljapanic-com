@@ -1,14 +1,17 @@
 import type { MDXComponents } from 'mdx/types'
 import Link from 'next/link'
 import { ArrowTopRightIcon } from '@radix-ui/react-icons'
+// import Image from 'next/image'
 
 /* custom mdx components */
-import { Image } from '@/components/mdx/image'
+
+import { Image as MdxImage } from '@/components/mdx/image'
 import { Figure } from '@/components/mdx/figure'
 import { FigureLegacy } from '@/components/mdx/figure-legacy'
 import { Quote } from '@/components/mdx/quote'
 import { Soundcloud } from '@/components/mdx/soundcloud'
 import { VideoPlayer } from '@/components/mdx/video-player'
+import { getFaviconUrl, getDomain } from '@/lib/utils'
 
 // Define your custom MDX components.
 export const mdxComponents: MDXComponents = {
@@ -19,11 +22,18 @@ export const mdxComponents: MDXComponents = {
 		if (isExternal) {
 			return (
 				<span className="group">
+					{/* <Image
+						src={getFaviconUrl(href as string, 128)}
+						alt={getDomain(href as string)}
+						width={12}
+						height={12}
+						className="mr-1.5 inline-block"
+					/> */}
 					<a href={href} target="_blank" rel="noopener noreferrer">
 						{children}
 					</a>
 
-					<ArrowTopRightIcon className="inline-block text-muted-foreground transition-transform duration-200 group-hover:translate-x-[1px] group-hover:translate-y-[-1px] group-hover:text-foreground" />
+					<ArrowTopRightIcon className="ml-0.5 inline-block text-muted-foreground transition-transform duration-200 group-hover:translate-x-[1px] group-hover:translate-y-[-1px] group-hover:text-foreground" />
 				</span>
 			)
 		} else {
@@ -31,7 +41,7 @@ export const mdxComponents: MDXComponents = {
 		}
 	},
 	Image: ({ src, alt }) => (
-		<Image src={src} alt={alt} width={1200} height={200} />
+		<MdxImage src={src} alt={alt} width={1200} height={200} />
 	),
 	// img: ({ src, alt }) => (<Image src={src} alt={alt} sizes="100vw" style={ 'width': '100%', 'height': 'auto' }  {...props} />),
 	// Add a custom component.

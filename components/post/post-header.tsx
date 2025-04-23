@@ -11,6 +11,7 @@ interface PostHeaderProps {
 	showDate?: boolean
 	asH2?: boolean
 	className?: string
+	showPostType?: boolean
 }
 
 export function PostHeader({
@@ -21,6 +22,7 @@ export function PostHeader({
 	showDate = false,
 	asH2 = false,
 	className,
+	showPostType = true,
 }: PostHeaderProps) {
 	return (
 		<header className={cn(className)}>
@@ -34,19 +36,19 @@ export function PostHeader({
 				</div>
 			)}
 
-			{(postType === 'Article' || postType === 'Note') && (
+			{showPostType && (
 				<div className="mb-2 flex items-center gap-4">
-					<div className="inline-block rounded-full border border-muted px-2 py-0.5 text-xs font-medium leading-none text-muted-foreground">
-						{postType}
+					<div className="inline-block rounded-md border border-muted px-2 py-0.5 text-xs font-medium lowercase leading-none text-muted-foreground">
+						{postType === 'Note' ? 'Garden' : postType}
 					</div>
 				</div>
 			)}
 
 			{/* title */}
 			{asH2 ? (
-				<h2 className="mb-0 mt-0">{title}</h2>
+				<h2 className="my-0">{title}</h2>
 			) : (
-				<h1 className="mb-0 mt-0">{title}</h1>
+				<h1 className="my-0">{title}</h1>
 			)}
 
 			{/* subtitle (optional) */}

@@ -56,5 +56,12 @@ export const Note = defineDocumentType(() => ({
 			type: 'string',
 			resolve: (post) => post._raw.sourceFileName.replace(/\.(mdx|md)$/, ''),
 		},
+		directoryPath: {
+			type: 'string',
+			resolve: (post) => {
+				const parts = post._raw.flattenedPath.split('/')
+				return parts.length > 2 ? parts[1] : '_root'
+			},
+		},
 	},
 }))

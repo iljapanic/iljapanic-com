@@ -1,9 +1,8 @@
 ---
 title: symbiotic real
-subtitle: ˌsɪmbɪˈɒtɪk riːl
 createdAt: 2025-03-12
 publishedAt: 2025-03-12
-updatedAt: 2025-04-09
+updatedAt: 2025-04-23
 isPublished: true
 ---
 
