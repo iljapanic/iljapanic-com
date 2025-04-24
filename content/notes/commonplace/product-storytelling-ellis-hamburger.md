@@ -2,7 +2,7 @@
 title: Product storytelling with Ellis Hamburger
 createdAt: 2025-04-21
 updatedAt: 2025-04-24
-isPublished: true
+isPublished: false
 ---
 
 Guest: [[Ellis Hamburger]]

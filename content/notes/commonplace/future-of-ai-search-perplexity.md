@@ -3,7 +3,7 @@ updated: 2025-03-08T03:04
 created: 2024-07-28T09:41
 createdAt: 2024-07-28
 updatedAt: 2025-04-24
-isPublished: true
+isPublished: false
 title: About the future of AI and search with Aravind Srinivas from Perplexity
 ---
 Medium: podcast

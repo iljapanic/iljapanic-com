@@ -3,7 +3,7 @@ updated: 2025-03-08T03:04
 created: 2024-08-12T12:31
 createdAt: 2024-08-12
 updatedAt: 2025-04-24
-isPublished: true
+isPublished: false
 title: Building product at Stripe with Jeff Weinstein
 ---
 Medium: podcast
