@@ -48,11 +48,11 @@ export async function Post({
 			</div>
 
 			{/* date for garden posts */}
-			{post.type === 'Note' && post.publishedAt && (
+			{post.type === 'Note' && post.updatedAt && (
 				<div className="mt-16 font-serif italic text-muted-foreground">
 					Last tended in{' '}
-					<time dateTime={post.publishedAt} className="">
-						{format(parseISO(post.publishedAt), 'LLLL d, yyyy')}
+					<time dateTime={post.updatedAt} className="">
+						{format(parseISO(post.updatedAt), 'LLLL d, yyyy')}
 					</time>
 				</div>
 			)}
