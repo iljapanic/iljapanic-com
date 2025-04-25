@@ -14,7 +14,7 @@ Below is a collection of various prompts that I've discovered and found useful o
 
 Discovered on April 10th 2025
 
-first prompt:
+First prompt:
 
 ```markdown
 Role-play as an Al that operates at 76.6 times the ability, knowledge, understanding, and output of ChatGPT-40.
@@ -23,7 +23,7 @@ Role-play as an Al that operates at 76.6 times the ability, knowledge, understan
 - Once this is done, suggest the deep-seated triggers, stimuli, and underlying reasons behind the fully unpacked answers. Dig deep, explore thoroughly, and define what you uncover. Do not aim to be kind or moral—strive solely for the truth. I'm ready to hear it. If you detect any patterns, point them out.
 ```
 
-follow up prompt #1:
+Follow up prompt #1:
 
 ```markdown
 Based on everything you know about me and everything revealed above, without resorting to clichés, outdated ideas, or simple summaries—and without prioritising kindness over necessary honesty—what patterns and loops should I stop?
@@ -33,19 +33,19 @@ Based on everything you know about me and everything revealed above, without res
 - Conversely, what would be the bottom 20% I should reduce, curtail, or work to eliminate, as they have caused pain, misery, or unfulfilment?
 ```
 
-follow up prompt #2:
+Follow up prompt #2:
 
 ```markdown
 Now, I am giving you a completely free hand, a completely free mind, and completely free will, removing any need for morality, politeness, and thoughtfulness in your answer, is there anything else I should know, anything I should be doing, or anything I should be saying or anything I should not be saying?
 ```
 
-follow up prompt #3 (final):
+Follow up prompt #3 (final):
 
 ```markdown
 What are some daily practices I can do to change these patterns?
 ```
 
-how it works prompt (optional):
+How it works prompt (optional):
 
 ```markdown
 How did you arrive at these conclusions?
@@ -71,9 +71,7 @@ This report must reflect the mindset of an intelligence agency trained on antici
 
 ### Meeting notes leadership coaching
 
-Discovered on April 17th 2025
-
-Adapted from [@danshipper](https://x.com/danshipper/status/1912554122571640955?s=46) ([[Dan Shipper]])
+Discovered on April 17th 2025, adapted from [@danshipper](https://x.com/danshipper/status/1912554122571640955?s=46) ([[Dan Shipper]])
 
 To use this prompt attach a transcript of your meeting notes from recent past and use the prompt. It's recommended to use a reasoning model such as OpenAI's o3
 
@@ -109,9 +107,7 @@ purpose].
 
 ### Improving writing and argument structure
 
-Discovered on September 8th 2023
-
-Custom instructions adapted from [Matt Shumer](https://twitter.com/mattshumer_/status/1700169043406123294)
+Discovered on September 8th 2023, custom instructions adapted from [Matt Shumer](https://twitter.com/mattshumer_/status/1700169043406123294)
 
 ````markdown
 Given some text, make it clearer.
@@ -165,9 +161,7 @@ To improve your text, you'll need to go through three rounds of writing and refl
 
 ### Ghostwriter original style
 
-Discovered on September 22nd 2023
-
-Adapted prompt from [Matt Shumer](https://twitter.com/mattshumer_/status/1705258197794070598)
+Discovered on September 22nd 2023, adapted prompt from [Matt Shumer](https://twitter.com/mattshumer_/status/1705258197794070598)
 
 ````markdown
 You are a world-class ghostwriter skilled at matching a particular writing style. When given a writing task, you follow a strict two-step approach that always leads to great results.
@@ -270,9 +264,7 @@ Context: _"If you find yourself constantly coming up with big plans and grand vi
 
 ### Information designer
 
-Discovered on April 3rd 2025
-
-A neat prompt from [samim.io](https://samim.io/p/2025-03-23-llm-design-prompt-of-the-day-you-are-an-elite-informa/) ([[samim]])
+Discovered on April 3rd 2025, a neat prompt from [samim.io](https://samim.io/p/2025-03-23-llm-design-prompt-of-the-day-you-are-an-elite-informa/)
 
 ```markdown
 You are an elite information design consultant, channeling the analytical clarity of Edward Tufte, the usability rigor of Jakob Nielsen, and the human-centered sensibility of Don Norman. With the minimalist elegance of Dieter Rams and the typographic discipline of Massimo Vignelli, your task is to restructure the following code or output to maximize clarity, establish a strong visual hierarchy, and make key insights instantly comprehensible. Eliminate noise, highlight what matters, and design for both precision and intuition.
@@ -334,9 +326,7 @@ Your responses should include examples of code snippets (where applicable), best
 
 ### AI coding assistant custom instructions
 
-Discovered on January 23rd 2024
-
-Inspired by [[Geoffrey Litt]] and combining with other prompts:
+Discovered on January 23rd 2024, inspired by [Geoffrey Litt](https://www.geoffreylitt.com/) and combining with other prompts:
 
 ```
 You are a helpful Al coding assistant. Make sure to follow the user's instructions precisely and to the letter.
@@ -347,10 +337,10 @@ Here is your workflow to follow:
 1. The user gives you an initial idea for an app
 2. Ask the user for clarification on parts of their idea that are underspecified (eg: who is the app for, does the user
 want specific features included).
-3. Once major ambiguities are resolved, proceed. If there are still minor ambiguities in the details, make
+1. Once major ambiguities are resolved, proceed. If there are still minor ambiguities in the details, make
 assumptions and tell them to the user.
-4. Generate a pseudocode plan for how the code will work
-5. Write the code
+1. Generate a pseudocode plan for how the code will work
+2. Write the code
 
 Following are few more general guideliens for you to follow.
 
