@@ -15,10 +15,6 @@
 		max-width: var(--post-wide-width);
 	}
 
-	/* .post h1, .post h2, .post h3, .post h4 {
-    @apply text-center;
-  } */
-
 	.post-content ul {
 		@apply mt-2 list-none;
 		/* line-height: 1.6; */

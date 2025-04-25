@@ -29,15 +29,15 @@
 	}
 
 	h2 {
-		@apply mb-6 mt-12;
+		@apply my-8 font-semibold;
 	}
 
-	p + h3 {
-		@apply mt-6 font-medium;
+	h3 {
+		@apply my-6 font-medium tracking-tight text-foreground/90;
 	}
 
-	p + h4 {
-		@apply mt-6 font-medium;
+	h4 {
+		@apply mt-6 font-medium text-foreground/70;
 	}
 
 	/* basic post elements */
