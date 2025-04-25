@@ -1,21 +1,18 @@
 ---
-updated: 2025-03-08T03:04
-created: 2024-08-12T12:31
 createdAt: 2024-08-12
-updatedAt: 2025-04-24
+updatedAt: 2025-04-25
 isPublished: false
 title: Building product at Stripe with Jeff Weinstein
 ---
+
 Medium: podcast
 Guests: [[Jeff Weinstein]]
 Host: [[Lenny Rachitsky]]
 Topics: [[Building a business]], [[Making a product]], [[User research]]
 Readwise: [Readwise](https://readwise.io/bookreview/43001284)
-Source: [Episode page](https://www.lennysnewsletter.com/p/building-product-at-stripe-jeff-weinstein), [YouTube](https://www.youtube.com/watch?v=qbZQjprTnrU), [Spotify](https://open.spotify.com/episode/4WbvraG0Q4N6WNbjqJrRFU?si=5cb9631bdc02458e) 
-
+Source: [Episode page](https://www.lennysnewsletter.com/p/building-product-at-stripe-jeff-weinstein), [YouTube](https://www.youtube.com/watch?v=qbZQjprTnrU), [Spotify](https://open.spotify.com/episode/4WbvraG0Q4N6WNbjqJrRFU?si=5cb9631bdc02458e)
 
 A very insightful conversation about (really) talking to customers and building successful products from 0 to 100
-
 
 - Jeff talks about deceptively simple principles that take a lot of focus discipline to get right and put to practice in day to day
 - Don’t use arbitrary metrics that are easy to track

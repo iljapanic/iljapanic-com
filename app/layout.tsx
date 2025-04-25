@@ -3,6 +3,7 @@ import { Footer } from '@/components/globals/footer'
 import { Header } from '@/components/globals/header'
 
 export const metadata = {
+	metadataBase: new URL('https://iljapanic.com'),
 	title: {
 		default: 'Ilja Panic',
 		template: '%s · Ilja Panic',

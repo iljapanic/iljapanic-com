@@ -1,5 +1,4 @@
 import { ImageResponse } from 'next/og'
-import { allDocuments } from 'contentlayer/generated'
 import { join } from 'node:path'
 import { readFile } from 'node:fs/promises'
 
@@ -9,10 +8,9 @@ export const size = {
 }
 
 export const contentType = 'image/png'
+export const dynamic = 'force-dynamic'
 
-export default async function Image({ params }: { params: { slug: string } }) {
-	const post = allDocuments.find((post) => post.slug === params.slug)
-
+export default async function Image() {
 	// If no post is found, return a default image
 	const title = 'Ilja Panic'
 	const subtitle = 'Technologist, Designer & Information Ecologist'
@@ -53,7 +51,7 @@ export default async function Image({ params }: { params: { slug: string } }) {
 				>
 					<div
 						style={{
-							fontSize: post?.subtitle ? 46 : 56,
+							fontSize: 46,
 							fontWeight: 'medium',
 							color: fgColor1,
 							textAlign: 'left',
