@@ -1,6 +1,4 @@
 import { ImageResponse } from 'next/og'
-import { join } from 'node:path'
-import { readFile } from 'node:fs/promises'
 
 export const size = {
 	width: 1200,
@@ -13,12 +11,6 @@ export default async function Image() {
 	// If no post is found, return a default image
 	const title = 'Ilja Panic'
 	const subtitle = 'Technologist, Designer & Information Ecologist'
-
-	// Read the profile image
-	const profileImageData = await readFile(
-		join(process.cwd(), 'public/images/iljapanic.jpg'),
-	)
-	const profileImageSrc = `data:image/jpeg;base64,${profileImageData.toString('base64')}`
 
 	const fgColor1 = '#191918'
 	const fgColor2 = '#494844'
@@ -85,7 +77,7 @@ export default async function Image() {
 						}}
 					>
 						<img
-							src={profileImageSrc}
+							src="https://iljapanic.com/images/iljapanic.jpg"
 							width={72}
 							height={72}
 							style={{
