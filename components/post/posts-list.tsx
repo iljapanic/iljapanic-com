@@ -20,7 +20,7 @@ export function PostsList({
 				>
 					<div className="space-y-1">
 						<header className="flex items-center justify-between">
-							<h3 className="mb-0 font-normal">{post.title}</h3>
+							<h3 className="mb-0 mt-0 font-normal">{post.title}</h3>
 							{showDate && (
 								<time
 									dateTime={post.publishedAt}
