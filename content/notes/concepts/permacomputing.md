@@ -1,9 +1,10 @@
 ---
 title: Permacomputing
 createdAt: 2025-04-22
-updatedAt: 2025-04-24
+updatedAt: 2025-05-09
 isPublished: true
 publishedAt: 2025-04-22
+isFeatured: true
 ---
 
 

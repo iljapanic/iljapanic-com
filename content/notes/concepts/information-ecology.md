@@ -2,8 +2,9 @@
 title: Information ecology
 createdAt: 2025-03-12
 publishedAt: 2025-03-12
-updatedAt: 2025-04-24
+updatedAt: 2025-05-09
 isPublished: true
+isFeatured: true
 ---
 
 Information ecology refers to the study of information environments as living systems, where people, technologies, practices, and values interact in complex and sometimes unpredictable ways.

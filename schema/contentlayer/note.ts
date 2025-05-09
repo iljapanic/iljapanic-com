@@ -35,6 +35,11 @@ export const Note = defineDocumentType(() => ({
 			description: 'Whether the note is published',
 			required: true,
 		},
+		isFeatured: {
+			type: 'boolean',
+			description: 'Whether the note is featured on the homepage',
+			required: false,
+		},
 		keywords: {
 			type: 'list',
 			of: { type: 'string' },

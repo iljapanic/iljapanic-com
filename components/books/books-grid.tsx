@@ -9,12 +9,7 @@ export function BooksGrid({
 	className?: string
 }) {
 	return (
-		<div
-			className={cn(
-				'grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-4',
-				className,
-			)}
-		>
+		<div className={cn('grid grid-cols-3 gap-6 lg:grid-cols-4', className)}>
 			{books.map((book) => (
 				<Book key={book} slug={book} />
 			))}

@@ -4,7 +4,7 @@ import { PostHeader } from '@/components/post/post-header'
 import { keystaticReader } from '@/lib/keystatic-reader'
 
 const title = 'Bookshelf'
-const subtitle = 'Texts that shaped how I see the world'
+const subtitle = 'Texts that shaped how I view the world'
 
 export const metadata = {
 	title: title,

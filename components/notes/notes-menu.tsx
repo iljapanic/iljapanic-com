@@ -52,7 +52,7 @@ export async function NotesMenu({
 
 	return (
 		<aside>
-			<h3 className="mb-4">
+			<h3 className="mb-4 mt-0">
 				<Link
 					href="/garden"
 					className="font-serif text-sm italic text-foreground/90"

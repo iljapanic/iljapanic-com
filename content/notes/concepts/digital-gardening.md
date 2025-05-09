@@ -8,7 +8,8 @@ keywords:
   - productivity
 isPublished: true
 createdAt: 2023-05-16
-updatedAt: 2025-04-24
+updatedAt: 2025-05-09
+isFeatured: true
 ---
 
 <Quote author="Maggie Appleton" url="https://maggieappleton.com/garden-history">

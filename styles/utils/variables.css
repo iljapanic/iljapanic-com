@@ -104,8 +104,8 @@
 		--secondary-foreground: var(--sand-11);
 		--muted: var(--sand-5);
 		--muted-foreground: var(--sand-9);
-		--accent: var(--sand-4);
-		--accent-foreground: var(--sand-11);
+		--accent: var(--sand-5);
+		--accent-foreground: var(--sand-9);
 		--destructive: var(--red-4);
 		--destructive-foreground: var(--red-11);
 		--success: var(--green-4);
