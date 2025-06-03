@@ -5,4 +5,9 @@
 		background-size: 182px;
 		opacity: var(--noise-opacity, 0.025);
 	}
+
+	.debug {
+		border: 1px solid red;
+		background-color: rgba(255, 0, 0, 0.1);
+	}
 }

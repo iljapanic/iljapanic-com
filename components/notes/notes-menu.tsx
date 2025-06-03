@@ -1,26 +1,44 @@
+'use client'
+
 import Link from 'next/link'
+import { useState } from 'react'
 import {
 	Popover,
 	PopoverContent,
 	PopoverTrigger,
 } from '@/components/ui/popover'
 
-import { HamburgerMenuIcon } from '@radix-ui/react-icons'
+import { Cross as Hamburger } from 'hamburger-react'
 
-import type { Note } from 'contentlayer/generated'
-import { allNotes } from 'contentlayer/generated'
 import { cn } from '@/lib/utils'
-import { Button } from '@/components/ui/button'
+import type { Note } from 'contentlayer/generated'
 
-export async function NotesMenu({
+function getWordCountIndicator(wordCount: number): string {
+	if (wordCount < 100) {
+		return '●'
+	} else if (wordCount < 300) {
+		return '●●'
+	} else if (wordCount < 600) {
+		return '●●●'
+	} else if (wordCount > 1000 && wordCount < 3000) {
+		return '●●●●'
+	} else if (wordCount > 3000) {
+		return '●●●●●'
+	}
+	return ''
+}
+
+function isCurrent(note: Note, currentPageSlug: string) {
+	return note.slug === currentPageSlug
+}
+
+export function NotesMenu({
 	currentPageSlug,
+	notes,
 }: {
 	currentPageSlug: string
+	notes: Note[]
 }) {
-	const notes = await allNotes.filter((note) => note.isPublished)
-
-	const isCurrent = (note: Note) => note.slug === currentPageSlug
-
 	// Sort all notes alphabetically by title
 	const sortedNotes = notes.sort((a, b) => a.title.localeCompare(b.title))
 
@@ -39,20 +57,19 @@ export async function NotesMenu({
 			{sortedNotes.length > 0 && (
 				<ul className="space-y-0">
 					{sortedNotes.map((note) => (
-						<li
-							key={note._id}
+						<Link
+							href={`/${note.slug}`}
 							className={cn(
-								'border-l border-muted py-0.5 pl-2 md:pl-3',
-								isCurrent(note) && 'border-brand',
+								'flex items-center border-l py-1.5 pl-2 text-xs text-foreground/70 no-underline hover:text-foreground',
+								isCurrent(note, currentPageSlug) &&
+									'border-brand text-brand hover:text-brand', // Active state style
 							)}
 						>
-							<NotesMenuLink
-								isCurrent={isCurrent(note)}
-								slug={note.slug}
-								children={note.title}
-								wordCount={note.wordCount}
-							/>
-						</li>
+							{note.title}
+							<span className="ml-2 text-[6px] leading-none text-muted-foreground/40">
+								{getWordCountIndicator(note.wordCount)}
+							</span>
+						</Link>
 					))}
 				</ul>
 			)}
@@ -60,65 +77,68 @@ export async function NotesMenu({
 	)
 }
 
-function NotesMenuLink({
-	isCurrent,
-	slug,
-	children,
-	wordCount,
-}: {
-	isCurrent: boolean
-	slug: string
-	children: React.ReactNode
-	wordCount: number
-}) {
-	const getWordCountIndicator = (wordCount: number) => {
-		if (wordCount < 100) {
-			return '●'
-		} else if (wordCount < 300) {
-			return '●●'
-		} else if (wordCount < 600) {
-			return '●●●'
-		} else if (wordCount > 1000 && wordCount < 3000) {
-			return '●●●●'
-		} else if (wordCount > 3000) {
-			return '●●●●●'
-		}
-	}
-
-	return (
-		<Link
-			href={`/${slug}`}
-			className={cn(
-				'inline-flex items-center text-xs text-foreground/70 no-underline hover:text-foreground',
-				isCurrent && 'text-brand hover:text-brand', // Active state style
-			)}
-		>
-			{children}
-			<span className="ml-2 text-[6px] leading-none text-muted-foreground/40">
-				{getWordCountIndicator(wordCount)}
-			</span>
-		</Link>
-	)
-}
-
 export function NotesMenuMobile({
 	currentPageSlug,
+	notes,
 }: {
 	currentPageSlug: string
+	notes: Note[]
 }) {
+	// Sort all notes alphabetically by title
+	const sortedNotes = notes.sort((a, b) => a.title.localeCompare(b.title))
+
+	const [isOpen, setIsOpen] = useState(false)
+
 	return (
-		<Popover>
+		<Popover open={isOpen} onOpenChange={setIsOpen}>
 			<PopoverTrigger asChild className="z-50">
-				<Button
-					className="gap-1.5 rounded-full border bg-secondary/85 font-serif italic shadow backdrop-blur-sm"
-					size="sm"
-					variant="secondary"
+				<button
+					className={cn(
+						'inline-flex w-fit items-center rounded-full pl-1 pr-3 font-serif text-sm italic text-primary-foreground shadow backdrop-blur-sm transition-colors',
+						isOpen ? 'bg-primary/75' : 'bg-primary/90',
+					)}
 				>
-					<HamburgerMenuIcon className="h-4 w-4" /> Garden
-				</Button>
+					<div className="-m-2.5">
+						<Hamburger
+							toggled={isOpen}
+							toggle={setIsOpen}
+							size={14}
+							duration={0.3}
+						/>
+					</div>
+					Garden
+				</button>
 			</PopoverTrigger>
-			<PopoverContent>
-				<NotesMenu currentPageSlug={currentPageSlug} />
+			<PopoverContent className="mb-2 w-[58vw]">
+				<aside>
+					<h3 className="mb-2 mt-0">
+						<Link
+							href="/garden"
+							className="font-serif text-sm italic text-foreground/90"
+						>
+							Garden
+						</Link>
+					</h3>
+					{sortedNotes.length > 0 && (
+						<ul className="space-y-1.5">
+							{sortedNotes.map((note) => (
+								<Link
+									href={`/${note.slug}`}
+									className={cn(
+										'flex items-center justify-between text-xs text-foreground/70 no-underline hover:text-foreground',
+										isCurrent(note, currentPageSlug) &&
+											'text-brand hover:text-brand', // Active state style
+									)}
+								>
+									{note.title}
+									<div className="text-[6px] leading-none text-muted-foreground/40">
+										{getWordCountIndicator(note.wordCount)}
+									</div>
+								</Link>
+							))}
+						</ul>
+					)}
+				</aside>
 			</PopoverContent>
 		</Popover>
 	)

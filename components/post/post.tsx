@@ -4,6 +4,8 @@ import { PostHeader } from '@/components/post/post-header'
 import { mdxComponents } from '@/components/mdx/mdx-components'
 import { NotesMenu, NotesMenuMobile } from '@/components/notes/notes-menu'
 
+import { allNotes } from 'contentlayer/generated'
+
 import type { Article, Page, Note, Post } from 'contentlayer/generated'
 
 import { cn } from '@/lib/utils'
@@ -17,6 +19,12 @@ export async function Post({
 	className?: string
 }) {
 	const MDXContent = useMDXComponent(post.body.code)
+
+	let notes: Note[] = []
+
+	if (post.type === 'Note') {
+		notes = await allNotes.filter((note) => note.isPublished)
+	}
 
 	return (
 		<article className={cn('post-wrapper relative mx-auto', className)}>
@@ -62,11 +70,11 @@ export async function Post({
 				<div>
 					{/* desktop */}
 					<div className="fixed left-0 top-0 hidden h-[100vh] w-[280px] items-center overflow-scroll border-border py-24 pl-10 opacity-60 lg:flex">
-						<NotesMenu currentPageSlug={post.slug} />
+						<NotesMenu currentPageSlug={post.slug} notes={notes} />
 					</div>
 					{/* mobile */}
-					<div className="fixed bottom-4 left-0 right-0 z-50 flex w-full justify-center lg:hidden">
-						<NotesMenuMobile currentPageSlug={post.slug} />
+					<div className="fixed bottom-8 left-0 right-0 z-50 flex w-full justify-center lg:hidden">
+						<NotesMenuMobile currentPageSlug={post.slug} notes={notes} />
 					</div>
 				</div>
 			)}
