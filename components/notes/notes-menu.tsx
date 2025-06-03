@@ -21,38 +21,12 @@ export async function NotesMenu({
 
 	const isCurrent = (note: Note) => note.slug === currentPageSlug
 
-	// Group notes by directory path
-	const groupedNotes = notes.reduce(
-		(acc, note) => {
-			const key = note.directoryPath || '_root'
-			if (!acc[key]) {
-				acc[key] = []
-			}
-			// TODO: Address potential type mismatch here if linter error persists from Post component
-			acc[key].push(note)
-			return acc
-		},
-		{} as Record<string, Note[]>,
-	)
-
-	// Sort notes within each group alphabetically by title
-	Object.keys(groupedNotes).forEach((key) => {
-		groupedNotes[key].sort((a, b) => a.title.localeCompare(b.title))
-	})
-
-	// Separate root notes and directory keys
-	const rootNotes = groupedNotes['_root'] || []
-	const directoryKeys = Object.keys(groupedNotes)
-		.filter((key) => key !== '_root')
-		.sort((a, b) => a.localeCompare(b)) // Sort directory keys alphabetically
-
-	// Find the current note to determine default open accordion item
-	// const currentNote = notes.find((note) => isCurrent(note))
-	// const defaultValue = currentNote?.directoryPath // Use directory path as default value
+	// Sort all notes alphabetically by title
+	const sortedNotes = notes.sort((a, b) => a.title.localeCompare(b.title))
 
 	return (
 		<aside>
-			<h3 className="mb-4 mt-0">
+			<h3 className="mb-2 mt-0 md:mb-2">
 				<Link
 					href="/garden"
 					className="font-serif text-sm italic text-foreground/90"
@@ -60,11 +34,18 @@ export async function NotesMenu({
 					Garden
 				</Link>
 			</h3>
-			{/* Render root notes as plain links */}
-			{rootNotes.length > 0 && (
-				<ul className="space-y-2">
-					{rootNotes.map((note) => (
-						<li key={note._id}>
+
+			{/* Render all notes as a simple alphabetical list */}
+			{sortedNotes.length > 0 && (
+				<ul className="space-y-0">
+					{sortedNotes.map((note) => (
+						<li
+							key={note._id}
+							className={cn(
+								'border-l border-muted py-0.5 pl-2 md:pl-3',
+								isCurrent(note) && 'border-brand',
+							)}
+						>
 							<NotesMenuLink
 								isCurrent={isCurrent(note)}
 								slug={note.slug}
@@ -74,40 +55,6 @@ export async function NotesMenu({
 						</li>
 					))}
 				</ul>
-			)}
-
-			{/* Render directories and their notes */}
-			{directoryKeys.length > 0 && (
-				<div className="mt-2 w-full">
-					{directoryKeys.map((key) => {
-						const groupNotes = groupedNotes[key]
-						return (
-							<div key={key} className="mb-2">
-								<div className="text-xs font-medium text-foreground/80">
-									{key}
-								</div>
-								<ul className="ml-2 mt-1">
-									{groupNotes.map((note) => (
-										<li
-											key={note._id}
-											className={cn(
-												'border-l border-muted py-0.5 pl-3',
-												isCurrent(note) && 'border-brand',
-											)}
-										>
-											<NotesMenuLink
-												isCurrent={isCurrent(note)}
-												slug={note.slug}
-												children={note.title}
-												wordCount={note.wordCount}
-											/>
-										</li>
-									))}
-								</ul>
-							</div>
-						)
-					})}
-				</div>
 			)}
 		</aside>
 	)
@@ -142,12 +89,12 @@ function NotesMenuLink({
 		<Link
 			href={`/${slug}`}
 			className={cn(
-				'text-xs text-foreground/70 no-underline hover:text-foreground',
+				'inline-flex items-center text-xs text-foreground/70 no-underline hover:text-foreground',
 				isCurrent && 'text-brand hover:text-brand', // Active state style
 			)}
 		>
 			{children}
-			<span className="ml-2 text-[9px] text-muted-foreground/40">
+			<span className="ml-2 text-[6px] leading-none text-muted-foreground/40">
 				{getWordCountIndicator(wordCount)}
 			</span>
 		</Link>
@@ -161,10 +108,11 @@ export function NotesMenuMobile({
 }) {
 	return (
 		<Popover>
-			<PopoverTrigger asChild>
+			<PopoverTrigger asChild className="z-50">
 				<Button
-					className="gap-1.5 rounded-full font-serif italic shadow-lg"
+					className="gap-1.5 rounded-full border bg-secondary/85 font-serif italic shadow backdrop-blur-sm"
 					size="sm"
+					variant="secondary"
 				>
 					<HamburgerMenuIcon className="h-4 w-4" /> Garden
 				</Button>
