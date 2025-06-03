@@ -94,7 +94,7 @@ export function NotesMenuMobile({
 			<PopoverTrigger asChild className="z-50">
 				<button
 					className={cn(
-						'inline-flex w-fit items-center rounded-full pl-1 pr-3 font-serif text-sm italic text-primary-foreground shadow backdrop-blur-sm transition-colors',
+						'inline-flex w-fit items-center rounded-full py-1 pl-2 pr-4 font-serif text-sm italic leading-none text-primary-foreground shadow backdrop-blur-sm transition-colors',
 						isOpen ? 'bg-primary/75' : 'bg-primary/90',
 					)}
 				>
@@ -109,7 +109,7 @@ export function NotesMenuMobile({
 					Garden
 				</button>
 			</PopoverTrigger>
-			<PopoverContent className="mb-2 w-[58vw]">
+			<PopoverContent className="mb-2 w-[72vw]">
 				<aside>
 					<h3 className="mb-2 mt-0">
 						<Link
@@ -120,12 +120,12 @@ export function NotesMenuMobile({
 						</Link>
 					</h3>
 					{sortedNotes.length > 0 && (
-						<ul className="space-y-1.5">
+						<ul className="space-y-2">
 							{sortedNotes.map((note) => (
 								<Link
 									href={`/${note.slug}`}
 									className={cn(
-										'flex items-center justify-between text-xs text-foreground/70 no-underline hover:text-foreground',
+										'flex items-center justify-between text-sm text-foreground/70 no-underline hover:text-foreground',
 										isCurrent(note, currentPageSlug) &&
 											'text-brand hover:text-brand', // Active state style
 									)}
