@@ -22,7 +22,7 @@ export async function Post({
 
 	let notes: Note[] = []
 
-	if (post.type === 'Note') {
+	if (post.type === 'Note' || post.slug === 'garden') {
 		notes = await allNotes.filter((note) => note.isPublished)
 	}
 
