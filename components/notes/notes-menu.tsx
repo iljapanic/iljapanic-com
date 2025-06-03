@@ -94,7 +94,7 @@ export function NotesMenuMobile({
 			<PopoverTrigger asChild className="z-50">
 				<button
 					className={cn(
-						'inline-flex w-fit items-center rounded-full py-1 pl-2 pr-4 font-serif text-sm italic leading-none text-primary-foreground shadow backdrop-blur-sm transition-colors',
+						'inline-flex w-fit items-center rounded-full py-1 pl-2 pr-4 text-sm leading-none text-primary-foreground shadow backdrop-blur-sm transition-colors',
 						isOpen ? 'bg-primary/75' : 'bg-primary/90',
 					)}
 				>
