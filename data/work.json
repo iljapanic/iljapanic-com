@@ -1,0 +1,172 @@
+[
+	{
+		"name": "Resolve",
+		"location": "Prague",
+		"url": "https://resolve.global",
+		"type": "full-time",
+		"logoFilename": "resolve.jpeg",
+		"items": [
+			{
+				"title": "CTO & Co-Founder",
+				"startDate": "2023-02-01",
+				"isActive": true,
+				"description": "Co-founded a platform for facilitating collaboration and information exchange between people, organizations, and communities in the impact and climate space. I'm responsible for the product's technology strategy, product design and development. We are currently in stealth mode and will be launching publicly in early 2024."
+			}
+		]
+	},
+
+	{
+		"name": "TAH",
+		"url": "https://tah-centre.org/",
+		"type": "freelance",
+		"logoFilename": "tah.jpeg",
+		"items": [
+			{
+				"title": "Founding Member",
+				"startDate": "2025-01-01",
+				"isActive": true,
+				"description": "I'm a founding member of the Centre for Innovations in Technology, Art, and Humanities. We are a non-profit organization that is dedicated to promoting innovation in technology, art, and humanities. We are a community of people who are passionate about using technology to create new art and humanities."
+			}
+		]
+	},
+	{
+		"name": "iljapanic.com",
+		"type": "freelance",
+		"url": "https://iljapanic.com",
+		"logoFilename": "iljapanic.jpg",
+		"items": [
+			{
+				"title": "Design Technologist",
+				"startDate": "2015-09-01",
+				"isActive": true,
+				"description": "Designed and developed tailor-made brochure websites for various businesses and artists. Worked with early-stage startups in the conceptual stages of their product cycle, devising UX strategies, designing UI mockups, and developing information architecture for their product offerings."
+			}
+		]
+	},
+	{
+		"name": "Avast",
+		"location": "Prague",
+		"type": "full-time",
+		"url": "https://avast.com",
+		"logoFilename": "avast.jpeg",
+		"items": [
+			{
+				"title": "Privacy UX Design Lead",
+				"startDate": "2022-06-01",
+				"endDate": "2023-01-31",
+				"description": "Led a team of four designers. Collaborated with PMs to plan roadmaps for all stand-alone privacy products. Worked with other design teams to integrate privacy features into the Avast One  flagship all-in-one offering."
+			},
+			{
+				"title": "Senior UX Designer",
+				"startDate": "2021-11-01",
+				"endDate": "2022-05-31",
+				"description": "Design ownership of Avast Secureline VPN, the company's largest stand-alone privacy product. Collaborated closely with PMs on devising and designing user experiments. Worked with a sales team to design new customer journeys."
+			}
+		]
+	},
+	{
+		"name": "CzechInvest",
+		"location": "Prague",
+		"type": "freelance",
+		"url": "https://czechinvest.org",
+		"logoFilename": "czechinvest.jpeg",
+		"items": [
+			{
+				"title": "Startup Mentor",
+				"startDate": "2020-10-01",
+				"endDate": "2022-03-01",
+				"description": "I've mentored a number of startups in the Czech Republic. I've helped them with their business plans, pitch decks, and fundraising strategies. I've also helped them with their product design and development."
+			}
+		]
+	},
+	{
+		"name": "GoodData",
+		"location": "Prague",
+		"url": "https://gooddata.com",
+		"type": "full-time",
+		"logoFilename": "gooddata.jpeg",
+		"items": [
+			{
+				"title": "Senior UX Designer (DX)",
+				"startDate": "2021-07-01",
+				"endDate": "2021-09-30",
+				"description": "I was hired as the first designer for an internal startup comprised of the company's top engineering talent. Worked closely with directors and staff engineers. Designed and led exploratory research sessions with developers in the BI and analytics space. Redesigned developer documentation and iterated on the developer onboarding experience."
+			}
+		]
+	},
+	{
+		"name": "Memsource",
+		"location": "Prague",
+		"url": "https://memsource.com",
+		"type": "full-time",
+		"logoFilename": "memsource.jpeg",
+		"items": [
+			{
+				"title": "Product Designer",
+				"startDate": "2020-01-01",
+				"endDate": "2021-05-31",
+				"description": "Collaborated with the CEO and the VP of Product to plan a UX strategy and establish better design practices. I've helped hire and  build a new UX team of four people after the previous team was dismantled. I've  spearheaded the company's design system efforts and started a small internal group dedicated to adopting design system best practices. Designed  features and user flows around a company's new ML offering."
+			}
+		]
+	},
+	{
+		"name": "H40",
+		"location": "Prague",
+		"url": "https://h40.cz",
+		"type": "freelance",
+		"logoFilename": "h40.jpeg",
+		"items": [
+			{
+				"title": "Technical Advisor",
+				"startDate": "2019-09-01",
+				"endDate": "2020-07-31",
+				"description": "Helped a local non-profit organization establish better practices and workflows around their use of technology. Devised an internal knowledge management system using Notion. Consulted the procurement of ICT and gear for a community center and incubation lab. Designed and developed the organization's homepage."
+			}
+		]
+	},
+	{
+		"name": "Copenhagen Business School",
+		"location": "Copenhagen",
+		"url": "https://cbs.dk",
+		"type": "freelance",
+		"logoFilename": "cbs.jpeg",
+		"items": [
+			{
+				"title": "Research Assistant",
+				"startDate": "2017-04-01",
+				"endDate": "2017-10-31",
+				"description": "Collaborated with an associate professor on a research project mapping the field of Information Management. Developed scripts for cleansing and manipulating large data sets."
+			}
+		]
+	},
+	{
+		"name": "Folkmatic",
+		"location": "Copenhagen",
+		"url": "https://folkmatic.com",
+		"type": "full-time",
+		"logoFilename": "folkmatic.jpeg",
+		"items": [
+			{
+				"title": "Front-end Developer",
+				"startDate": "2014-10-01",
+				"endDate": "2015-06-30",
+				"description": "Worked on a project basis with the agency's clients. Ad-hoc frontend assistance on existing long-term client projects. Designed UX concepts and developed UI prototypes for new projects. Lead frontend developer on a project for a telecom network operator. Worked on a homepage redesign for a major national party. Maintained a homepage for a UK-based investment bank."
+			}
+		]
+	},
+	{
+		"name": "Fontai",
+		"location": "Prague",
+		"url": "https://fontai.com",
+		"type": "freelance",
+		"logoFilename": "fontai.jpg",
+		"items": [
+			{
+				"title": "Assistant Project Manager",
+				"startDate": "2011-05-01",
+				"endDate": "2011-08-31",
+				"description": "Overseen the development of a newsletter platform. Prepared pricing models, presentations, and promotional materials."
+			}
+		]
+	}
+]

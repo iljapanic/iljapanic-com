@@ -49,3 +49,36 @@ export type HighlightTag = {
 	highlight_id: string
 	tag_id: string
 }
+
+export type ResumeItemType = {
+	name: string
+	type?: string
+	url?: string
+	location?: string
+	attachments?: Array<ResumeItemAttachmentType>
+	logoFilename?: string
+	items: Array<{
+		title: string
+		startDate: string
+		endDate: string
+		isActive?: boolean
+		description: string
+		links?: Array<ResumeItemLinkType>
+		attachments?: Array<ResumeItemAttachmentType>
+	}>
+}
+
+export type ResumeItemLinkType = {
+	headline?: string
+	title: string
+	description?: string
+	url: string
+}
+
+export type ResumeItemAttachmentType = {
+	type: 'link' | 'image' | 'video'
+	headline?: string
+	title?: string
+	url?: string
+	description?: string
+}

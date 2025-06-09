@@ -1,0 +1,15 @@
+[
+  {
+    "name": "Converge MVP",
+    "type": "Personal project",
+    "period": "2023",
+    "role": "Design & Development",
+    "stack": ["Nextjs", "Tailwind", "Airtable"],
+    "description": "A web app that allows users to create and share playlists of YouTube videos.",
+    "images": [
+      "projects/godeliver.png",
+      "projects/h40-km.png",
+      "projects/h40-web.png"
+    ]
+  }
+]

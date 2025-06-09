@@ -17,7 +17,7 @@ const contentLayerConfig = makeSource({
 	contentDirExclude: [
 		/* drafts */
 		'pages/_drafts',
-		'notes/_drafts',
+		'notes/drafts',
 		'articles/_drafts',
 		'posts/_drafts',
 		'_templates',

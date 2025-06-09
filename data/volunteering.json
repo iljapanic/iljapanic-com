@@ -1,0 +1,33 @@
+[
+	{
+		"name": "Czechitas",
+		"location": "Prague",
+		"url": "https://www.czechitas.cz/",
+		"type": "freelance",
+		"logoFilename": "czechitas.jpeg",
+		"items": [
+			{
+				"title": "Coach & Mentor",
+				"startDate": "2022-07-01",
+				"endDate": "2023-09-01",
+				"description": "Helped women in tech to get their first job in the industry. I've mentored them through the job search process, helped them with their CVs and LinkedIn profiles, and provided them with feedback on their job applications."
+			}
+		]
+	},
+
+	{
+		"name": "Loono",
+		"url": "https://www.loono.cz/",
+		"type": "freelance",
+		"location": "Prague",
+		"logoFilename": "loono.jpeg",
+		"items": [
+			{
+				"title": "Mentor",
+				"startDate": "2022-01-01",
+				"endDate": "2023-01-01",
+				"description": "I helped a young professional to get their first job in the industry. I've mentored them through the job search process, helped them with their CVs and LinkedIn profiles, and provided them with feedback on their job applications."
+			}
+		]
+	}
+]

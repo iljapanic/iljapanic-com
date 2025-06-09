@@ -1,3 +1,4 @@
+import { format } from 'date-fns'
 import { type ClassValue, clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 
@@ -90,4 +91,46 @@ export function getDomain(url: string) {
 export function getFaviconUrl(url: string, size: number = 128) {
 	const domain = getDomain(url)
 	return `https://www.google.com/s2/favicons?domain=${domain}&sz=${size}`
+}
+
+export function getTodayString() {
+	const today = new Date()
+	const year = today.getFullYear()
+	const month = String(today.getMonth() + 1).padStart(2, '0')
+	const day = String(today.getDate()).padStart(2, '0')
+
+	const dateString = `${year}-${month}-${day}`
+
+	return dateString
+}
+
+export function convertDate(inputDate: string) {
+	const outputDate = format(new Date(inputDate), 'MMM yyyy')
+	return outputDate
+}
+
+export function getDuration(startDate: string, endDate: string) {
+	const start = new Date(startDate)
+	const end = new Date(endDate)
+	const duration = +end - +start
+
+	const years = Math.floor(duration / (365 * 24 * 60 * 60 * 1000))
+	const months = Math.floor(
+		(duration % (365 * 24 * 60 * 60 * 1000)) / (30 * 24 * 60 * 60 * 1000),
+	)
+
+	let durationString = ''
+	if (years > 0) {
+		durationString += years + (years === 1 ? ' yr ' : ' yrs ')
+	}
+	if (months > 0) {
+		durationString += months + (months === 1 ? ' mo' : ' mos')
+	}
+
+	return durationString.trim()
+}
+
+export function getYear(inputDate: string) {
+	const outputDate = format(new Date(inputDate), 'yyyy')
+	return outputDate
 }

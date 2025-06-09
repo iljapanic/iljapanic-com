@@ -1,0 +1,107 @@
+[
+	{
+		"name": "IAAC",
+		"type": "MA",
+		"location": "Barcelona",
+		"url": "https://iaac.net",
+		"logoFilename": "iaac.jpeg",
+		"items": [
+			{
+				"title": "Design for Emergent Futures",
+				"startDate": "2018",
+				"endDate": "2019",
+				"description": "I was in the first cohort of this experimental master's program focused on speculative design, design fiction, rapid prototyping, and digital fabrication. I've also completed [Fab Academy](https://fabacademy.org) as part of the program. I've documented the studies on a [dedicated website](https://mdef.iljapanic.com/). As my final project, I've designed and developed Cyberbiomes - a conceptual framework for exploring interspecies modes of communication. This project took the form of an [essay](https://iljapanic.com/cyberbiomes), a [web repository](https://cyberbiomes.org/), and an [interactive installation](https://cyberbiomes.org/cyberbiome).",
+				"links": [
+					{
+						"headline": "Website",
+						"title": "MDEF Diary",
+						"description": "Website documenting the studies",
+						"url": "https://mdef.iljapanic.com/"
+					},
+					{
+						"headline": "Essay",
+						"title": "Cyberbiomes: Discussions with mycelium and solarpunk futures",
+						"description": "An essay accompanying the final project",
+						"url": "https://iljapanic.com/cyberbiomes"
+					},
+					{
+						"headline": "Website",
+						"title": "Cyberbiomes.org",
+						"description": "A web repository accompanying the final project",
+						"url": "https://cyberbiomes.org/"
+					},
+					{
+						"headline": "Showcase",
+						"title": "Cyberbiome",
+						"description": "An interactive installation accompanying the final project",
+						"url": "https://cyberbiomes.org/cyberbiome"
+					}
+				]
+			}
+		]
+	},
+	{
+		"name": "UCL",
+		"type": "MSc",
+		"location": "London",
+		"url": "https://ucl.ac.uk",
+		"logoFilename": "ucl.jpeg",
+		"items": [
+			{
+				"title": "Smart Cities & Urban Analytics",
+				"startDate": "2017",
+				"endDate": "2018",
+				"description": "The program was focused on geospatial data analysis and visualizations. I learned the basics of the design and development of  geographic information systems (GIS). Occasional detours into more critical, humanities-oriented themes around the notions of urban planning, smart cities, and ubiquitous computing. The degree gave me the technical and theoretical foundations for creating data-driven geographical interfaces.",
+				"links": [
+					{
+						"headline": "Thesis",
+						"title": "Citizen-first User Experience",
+						"description": "Towards Design Heuristics for Mobile Participation Spaces",
+						"url": "https://iljapanic.com/citizen-first-ux"
+					},
+					{
+						"headline": "Essay",
+						"title": "China's all-seeing 'Sharp Eyes'",
+						"description": "A surveillance perspective of the smart city",
+						"url": "https://iljapanic.com/china-sharp-eyes"
+					},
+					{
+						"headline": "Essay",
+						"title": "Critical Perspectives on Public Art & Innovation",
+						"description": "Facilitating bottom-up urban innovation through public art",
+						"url": "https://iljapanic.com/critical-public-art"
+					},
+					{
+						"headline": "Essay",
+						"title": "(Not So) Smart City",
+						"description": "Perils of data-driven approach to urban planning",
+						"url": "https://iljapanic.com/not-so-smart-city"
+					}
+				]
+			}
+		]
+	},
+	{
+		"name": "CBS",
+		"type": "BA",
+		"location": "Copenhagen",
+		"url": "https://cbs.dk",
+		"logoFilename": "cbs.jpeg",
+		"items": [
+			{
+				"title": "Information Management",
+				"startDate": "2012",
+				"endDate": "2015",
+				"description": "The program combined communication and organizational studies with informatics. The emphasis was on problems and perspectives related to the management of  data, information, and knowledge and how they are integrated in an organizational context. The program gave me a solid theoretical, analytical, and practical foundation for my further pursuits.",
+				"attachments": [
+					{
+						"type": "link",
+						"headline": "Thesis",
+						"title": "Going Beyond HCI: Information design in the context of travel",
+						"url": "https://iljapanic.com/going-beyond-hci"
+					}
+				]
+			}
+		]
+	}
+]
