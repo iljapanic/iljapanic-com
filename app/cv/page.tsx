@@ -5,6 +5,8 @@ import { redirect } from 'next/navigation'
 import { getResumeData } from '@/lib/resume'
 import type { ResumeItemType } from '@/types'
 
+import BioMdx from '@/content/snippets/bio.mdx'
+
 import ResumeSection from '@/components/resume/resume-section'
 import ResumeItem from '@/components/resume/resume-item'
 
@@ -42,35 +44,7 @@ export default async function CV({
 				titleClassName="italic font-serif font-medium"
 			>
 				<div>
-					<p>
-						I've been building products on the web professionally for a little
-						over 10 years. I specialize in strategic UX design and web
-						development with a penchant for clear information architecture,
-						design systems, and bespoke frontends.
-					</p>
-
-					<p>
-						I have worked with agencies, startups, non-profits, artists, small
-						vendors, medium SaaS companies, and large corporations. I'm used to
-						mediating between business, product, and development teams. I have
-						experience leading design initiatives, establishing design
-						processes, and shaping the overall design direction of
-						organizations.
-					</p>
-
-					<p>
-						I strive to approach my practice with a critical eye, stemming from
-						my eclectic academic background in complex systems and emergent
-						technologies.
-					</p>
-
-					<p>
-						Besides day-to-day work, I dabble with 3D printing, parametric and
-						generative design, programming microcontrollers, digging through
-						records, and collecting obscure books. These days, many of these
-						activities are now on the back burner as I spend more time with my
-						little daughter.
-					</p>
+					<BioMdx />
 				</div>
 			</ResumeSection>
 

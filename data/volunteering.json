@@ -10,23 +10,23 @@
 				"title": "Coach & Mentor",
 				"startDate": "2022-07-01",
 				"endDate": "2023-09-01",
-				"description": "Helped women in tech to get their first job in the industry. I've mentored them through the job search process, helped them with their CVs and LinkedIn profiles, and provided them with feedback on their job applications."
+				"description": "Assisted a team of young women during a web development course, providing guidance, technical support, and encouragement throughout their learning process."
 			}
 		]
 	},
 
 	{
-		"name": "Loono",
-		"url": "https://www.loono.cz/",
+		"name": "Česko.Digital",
+		"url": "https://cesko.digital/",
 		"type": "freelance",
 		"location": "Prague",
-		"logoFilename": "loono.jpeg",
+		"logoFilename": "ceskodigital.jpeg",
 		"items": [
 			{
 				"title": "Mentor",
 				"startDate": "2022-01-01",
 				"endDate": "2023-01-01",
-				"description": "I helped a young professional to get their first job in the industry. I've mentored them through the job search process, helped them with their CVs and LinkedIn profiles, and provided them with feedback on their job applications."
+				"description": "Mentored an aspiring UX designer transitioning from marketing to design. Provided strategic guidance on portfolio, job search, and application materials. Supported the mentee throughout the process, culminating in successful job placement within the design field."
 			}
 		]
 	}
