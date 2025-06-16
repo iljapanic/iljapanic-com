@@ -1,0 +1,114 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Book {
+  id               Int      @id @default(autoincrement())
+  userBookId       Int      @unique @map("user_book_id") // Readwise user_book_id
+  title            String
+  author           String?
+  readableTitle    String?  @map("readable_title")
+  source           String
+  coverImageUrl    String?  @map("cover_image_url")
+  uniqueUrl        String?  @map("unique_url")
+  category         String?
+  documentNote     String?  @map("document_note")
+  summary          String?
+  readwiseUrl      String   @map("readwise_url")
+  sourceUrl        String?  @map("source_url")
+  externalId       String?  @map("external_id")
+  asin             String?
+  slug             String?
+  isDeleted        Boolean  @default(false) @map("is_deleted")
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+  lastHighlightAt  DateTime? @map("last_highlight_at")
+
+  // Relations
+  highlights       Highlight[]
+  bookTags         BookTag[]
+
+  @@map("readwise_books")
+}
+
+model Highlight {
+  id              Int      @id @default(autoincrement())
+  readwiseId      Int      @unique @map("readwise_id") // Readwise highlight id
+  text            String
+  location        Int?
+  locationType    String?  @map("location_type")
+  note            String?
+  color           String?
+  highlightedAt   DateTime? @map("highlighted_at")
+  url             String?
+  endLocation     Int?     @map("end_location")
+  externalId      String?  @map("external_id")
+  readwiseUrl     String   @map("readwise_url")
+  isFavorite      Boolean  @default(false) @map("is_favorite")
+  isDiscard       Boolean  @default(false) @map("is_discard")
+  isDeleted       Boolean  @default(false) @map("is_deleted")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  // Foreign keys
+  bookId          Int      @map("book_id")
+  book            Book     @relation(fields: [bookId], references: [userBookId])
+
+  // Relations
+  tags            HighlightTag[]
+
+  @@map("readwise_highlights")
+}
+
+model Tag {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  bookTags      BookTag[]
+  highlightTags HighlightTag[]
+
+  @@map("readwise_tags")
+}
+
+model BookTag {
+  id     Int @id @default(autoincrement())
+  bookId Int @map("book_id")
+  tagId  Int @map("tag_id")
+
+  book   Book @relation(fields: [bookId], references: [id])
+  tag    Tag  @relation(fields: [tagId], references: [id])
+
+  @@unique([bookId, tagId])
+  @@map("readwise_book_tags")
+}
+
+model HighlightTag {
+  id          Int @id @default(autoincrement())
+  highlightId Int @map("highlight_id")
+  tagId       Int @map("tag_id")
+
+  highlight   Highlight @relation(fields: [highlightId], references: [id])
+  tag         Tag       @relation(fields: [tagId], references: [id])
+
+  @@unique([highlightId, tagId])
+  @@map("readwise_highlight_tags")
+}
+
+model SyncLog {
+  id        Int      @id @default(autoincrement())
+  syncedAt  DateTime @default(now()) @map("synced_at")
+  status    String   // 'success', 'error'
+  message   String?
+  bookCount Int?     @map("book_count")
+  highlightCount Int? @map("highlight_count")
+
+  @@map("readwise_sync_logs")
+}
