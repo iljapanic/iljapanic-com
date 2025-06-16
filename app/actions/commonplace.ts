@@ -238,7 +238,7 @@ export async function getCommonplaceData(
 			coverImageUrl: book.coverImageUrl || undefined,
 			sourceUrl: book.sourceUrl || undefined,
 			readwiseUrl: book.readwiseUrl,
-			category: book.category,
+			category: book.category || undefined,
 			slug: book.slug || undefined,
 			tags: book.bookTags.map((bt) => formatTagDisplayName(bt.tag.name)),
 			highlights: book.highlights.map((highlight) => ({
@@ -501,7 +501,7 @@ export async function getCommonplaceBookBySlug(
 			coverImageUrl: book.coverImageUrl || undefined,
 			sourceUrl: book.sourceUrl || undefined,
 			readwiseUrl: book.readwiseUrl,
-			category: book.category,
+			category: book.category || undefined,
 			tags: book.bookTags.map((bt) => formatTagDisplayName(bt.tag.name)),
 			highlights: book.highlights.map((highlight) => ({
 				id: highlight.id.toString(),
