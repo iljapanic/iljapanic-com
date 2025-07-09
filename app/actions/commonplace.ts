@@ -180,7 +180,7 @@ export async function getCommonplaceData(
 				},
 				include: includeStructure,
 				orderBy: {
-					lastHighlightAt: 'desc',
+					createdAt: 'desc',
 				},
 				skip,
 				take: pageSize,
@@ -205,7 +205,7 @@ export async function getCommonplaceData(
 				},
 				include: includeStructure,
 				orderBy: {
-					lastHighlightAt: 'desc',
+					createdAt: 'desc',
 				},
 				skip,
 				take: pageSize,
