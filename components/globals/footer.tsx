@@ -6,7 +6,7 @@ export function Footer() {
 	const currentYear = new Date().getFullYear()
 
 	return (
-		<footer className="container mt-20 pb-0">
+		<footer className="container mt-20 pb-0 print:hidden">
 			<div className="post-wrapper mx-auto">
 				<div className="my-20 text-center tracking-[0.75rem] text-muted-foreground">
 					***

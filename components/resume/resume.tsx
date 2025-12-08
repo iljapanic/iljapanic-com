@@ -1,6 +1,5 @@
 import { v4 } from 'uuid'
 import Image from 'next/image'
-import { redirect } from 'next/navigation'
 
 import { getResumeData } from '@/lib/resume'
 import type { ResumeItemType } from '@/types'
@@ -12,16 +11,7 @@ import ResumeItem from '@/components/resume/resume-item'
 
 import profilePic from '@/public/images/iljapanic.jpg'
 
-export default async function CV({
-	searchParams,
-}: {
-	searchParams: { [key: string]: string | string[] | undefined }
-}) {
-	// Check if access parameter is 'welcome'
-	if (searchParams.s !== 'welcome') {
-		redirect('/')
-	}
-
+export default async function Resume() {
 	const work = await getResumeData('work')
 	const education = await getResumeData('education')
 	const volunteering = await getResumeData('volunteering')
