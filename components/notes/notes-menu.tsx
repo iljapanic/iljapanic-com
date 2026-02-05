@@ -58,6 +58,7 @@ export function NotesMenu({
 				<ul className="space-y-0">
 					{sortedNotes.map((note) => (
 						<Link
+							key={note.slug}
 							href={`/${note.slug}`}
 							className={cn(
 								'flex items-center border-l py-1.5 pl-2 text-xs text-foreground/70 no-underline hover:text-foreground',
@@ -123,6 +124,7 @@ export function NotesMenuMobile({
 						<ul className="space-y-2">
 							{sortedNotes.map((note) => (
 								<Link
+									key={note.slug}
 									href={`/${note.slug}`}
 									className={cn(
 										'flex items-center justify-between text-sm text-foreground/70 no-underline hover:text-foreground',
