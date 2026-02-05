@@ -1,7 +1,9 @@
 ---
 title: Links
-subtitle: 'People whose work inspires me'
+subtitle: People whose work inspires me
 isPublished: true
+createdAt: 2023-05-16
+updatedAt: 2025-12-25
 ---
 
 [Maggie Appleton](https://maggieappleton.com/)
@@ -31,3 +33,5 @@ isPublished: true
 [Gagik Amaryan](https://gagik.co/)
 
 [Udara Jay](https://udara.io/)
+
+[Kay van den Aker](https://www.kayvandenaker.nl/)
