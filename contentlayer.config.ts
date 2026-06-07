@@ -13,6 +13,7 @@ import { Post } from './schema/contentlayer/post'
 
 const contentLayerConfig = makeSource({
 	contentDirPath: 'content',
+	disableImportAliasWarning: true,
 	documentTypes: [Article, Note, Page, Post],
 	contentDirExclude: [
 		/* drafts */
