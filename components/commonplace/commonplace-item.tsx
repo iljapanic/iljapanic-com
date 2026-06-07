@@ -28,7 +28,7 @@ export function CommonplaceItem({
 	const [collapsed, setCollapsed] = useState(isCollapsed)
 
 	return (
-		<article className="rounded bg-card p-4 shadow-sm">
+		<article className="rounded bg-card p-4 shadow-xs">
 			{/* Book Header */}
 			<header>
 				<div className="flex items-center justify-between gap-4">

@@ -59,7 +59,7 @@
 	}
 
 	p > code {
-		@apply rounded-sm bg-muted px-1 py-0.5 text-sm;
+		@apply rounded-xs bg-muted px-1 py-0.5 text-sm;
 	}
 
 	pre {
@@ -86,5 +86,5 @@
 }
 
 .headroom--pinned {
-	@apply shadow-sm;
+	@apply shadow-xs;
 }

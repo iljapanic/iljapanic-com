@@ -22,7 +22,7 @@ export default function ResumeItem({
 			{/* <div className="absolute -left-4 w-0.5 h-full bg-gray-100"></div> */}
 
 			{/* logo */}
-			<div className="h-12 w-12 flex-shrink-0">
+			<div className="h-12 w-12 shrink-0">
 				{logoFilename && url && (
 					<a
 						href={url}

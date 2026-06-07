@@ -16,84 +16,37 @@ export const metadata = {
 export default async function Page({
 	searchParams,
 }: {
-	searchParams: { [key: string]: string | string[] | undefined }
+	searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }) {
-	const page = parseAsInteger.withDefault(1).parseServerSide(searchParams.page)
+	const resolvedSearchParams = await searchParams
+	const page = parseAsInteger
+		.withDefault(1)
+		.parseServerSide(resolvedSearchParams.page)
 	const tagsParam = parseAsString
 		.withDefault('')
-		.parseServerSide(searchParams.tags)
+		.parseServerSide(resolvedSearchParams.tags)
 
 	// Parse pipe-delimited tags
 	const selectedTags = tagsParam
 		? tagsParam.split('|').filter((tag) => tag.trim())
 		: []
 
+	let data: Awaited<ReturnType<typeof getCommonplaceData>> = null
+	let availableTagsWithCount: Awaited<ReturnType<typeof getAvailableTags>> = []
+	let hasLoadError = false
+
 	try {
 		// Fetch data and available tags in parallel
-		const [data, availableTagsWithCount] = await Promise.all([
+		;[data, availableTagsWithCount] = await Promise.all([
 			getCommonplaceData(page, selectedTags),
 			getAvailableTags(selectedTags),
 		])
-
-		if (!data) {
-			return (
-				<div>
-					<div className="post-wrapper mx-auto mb-16">
-						<PostHeader title={title} subtitle={subtitle} />
-					</div>
-					<div className="post-wrapper mx-auto">
-						<div className="text-center text-muted-foreground">
-							Unable to load commonplace items. Please try again later.
-						</div>
-					</div>
-				</div>
-			)
-		}
-
-		return (
-			<div>
-				<div className="post-wrapper mx-auto mb-16">
-					<PostHeader title={title} subtitle={subtitle} />
-				</div>
-
-				{/* Tag Cloud */}
-				<div className="post-wrapper mx-auto mb-8">
-					<TagCloud
-						availableTags={availableTagsWithCount}
-						selectedTags={selectedTags}
-					/>
-				</div>
-
-				<div className="post-wrapper mx-auto">
-					{data.data.length > 0 ? (
-						<div className="space-y-12">
-							{data.data.map((book) => (
-								<CommonplaceItem key={book.id} book={book} />
-							))}
-						</div>
-					) : (
-						<div className="text-center text-muted-foreground">
-							{selectedTags.length > 0
-								? `No highlights found for the selected ${selectedTags.length === 1 ? 'tag' : 'tags'}: ${selectedTags.join(', ')}`
-								: 'No shared highlights found.'}
-						</div>
-					)}
-
-					{data.pagination.totalPages > 1 && (
-						<div className="mt-16">
-							<CommonplacePagination
-								currentPage={data.pagination.page}
-								totalPages={data.pagination.totalPages}
-								hasNextPage={data.pagination.hasNextPage}
-								hasPreviousPage={data.pagination.hasPreviousPage}
-							/>
-						</div>
-					)}
-				</div>
-			</div>
-		)
 	} catch (error) {
 		console.error('Error loading commonplace page:', error)
+		hasLoadError = true
+	}
+
+	if (hasLoadError) {
 		return (
 			<div>
 				<div className="post-wrapper mx-auto mb-16">
@@ -107,4 +60,62 @@ export default async function Page({
 			</div>
 		)
 	}
+
+	if (!data) {
+		return (
+			<div>
+				<div className="post-wrapper mx-auto mb-16">
+					<PostHeader title={title} subtitle={subtitle} />
+				</div>
+				<div className="post-wrapper mx-auto">
+					<div className="text-center text-muted-foreground">
+						Unable to load commonplace items. Please try again later.
+					</div>
+				</div>
+			</div>
+		)
+	}
+
+	return (
+		<div>
+			<div className="post-wrapper mx-auto mb-16">
+				<PostHeader title={title} subtitle={subtitle} />
+			</div>
+
+			{/* Tag Cloud */}
+			<div className="post-wrapper mx-auto mb-8">
+				<TagCloud
+					availableTags={availableTagsWithCount}
+					selectedTags={selectedTags}
+				/>
+			</div>
+
+			<div className="post-wrapper mx-auto">
+				{data.data.length > 0 ? (
+					<div className="space-y-12">
+						{data.data.map((book) => (
+							<CommonplaceItem key={book.id} book={book} />
+						))}
+					</div>
+				) : (
+					<div className="text-center text-muted-foreground">
+						{selectedTags.length > 0
+							? `No highlights found for the selected ${selectedTags.length === 1 ? 'tag' : 'tags'}: ${selectedTags.join(', ')}`
+							: 'No shared highlights found.'}
+					</div>
+				)}
+
+				{data.pagination.totalPages > 1 && (
+					<div className="mt-16">
+						<CommonplacePagination
+							currentPage={data.pagination.page}
+							totalPages={data.pagination.totalPages}
+							hasNextPage={data.pagination.hasNextPage}
+							hasPreviousPage={data.pagination.hasPreviousPage}
+						/>
+					</div>
+				)}
+			</div>
+		</div>
+	)
 }

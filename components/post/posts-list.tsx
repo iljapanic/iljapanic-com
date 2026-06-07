@@ -6,7 +6,12 @@ export function PostsList({
 	showDate = true,
 	showSubtitle = true,
 }: {
-	posts: any[]
+	posts: {
+		slug: string
+		title: string
+		publishedAt: string
+		subtitle?: string
+	}[]
 	showDate?: boolean
 	showSubtitle?: boolean
 }) {

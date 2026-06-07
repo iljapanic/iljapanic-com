@@ -30,11 +30,11 @@ const innovatorGrotesk = localFont({
 const sansFont = innovatorGrotesk
 
 export function SharedLayout({ children }: { children: React.ReactNode }) {
+	const plausibleSrc = process.env.NEXT_PUBLIC_PLAUSIBLE_SRC
+
 	return (
 		<html lang="en" suppressHydrationWarning>
-			<head>
-				<PlausibleProvider domain="iljapanic.com" />
-			</head>
+			<head>{plausibleSrc && <PlausibleProvider src={plausibleSrc} />}</head>
 			<body className={`${sansFont.variable} ${serifFont.variable}`}>
 				<ThemeProvider>
 					{children}

@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
-import ReactPlayer from 'react-player/lazy'
+import ReactPlayer from 'react-player'
 
 interface VideoPlayerProps {
   url: string
@@ -18,7 +18,7 @@ export const VideoPlayer: React.FC<VideoPlayerProps> = ({ url }) => {
     <div className="player-wrapper my-8">
       {isLoaded ? (
         <ReactPlayer
-          url={url}
+          src={url}
           controls={true}
           width="100%"
           height="100%"

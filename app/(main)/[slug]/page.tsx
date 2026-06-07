@@ -16,14 +16,15 @@ interface MetaObject {
 }
 
 export async function generateMetadata({
-	params: { slug },
+	params,
 }: {
-	params: { slug: string }
+	params: Promise<{ slug: string }>
 }) {
+	const { slug } = await params
 	const post = await allDocuments.find((post) => post.slug === slug)
 
 	if (post) {
-		let metaObject: MetaObject = {
+		const metaObject: MetaObject = {
 			title: post.title,
 			openGraph: {
 				title: post.title,
@@ -45,10 +46,11 @@ export async function generateMetadata({
 }
 
 export default async function Page({
-	params: { slug },
+	params,
 }: {
-	params: { slug: string }
+	params: Promise<{ slug: string }>
 }) {
+	const { slug } = await params
 	const post = await allDocuments.find((post) => post.slug === slug)
 
 	if (!post || !post.isPublished) {

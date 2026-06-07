@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils'
 interface ToolProps {
 	slug: string
 	iconSize?: number
-	inline?: any
+	inline?: boolean
 }
 
 export async function Tool({ slug, iconSize = 20, inline = false }: ToolProps) {

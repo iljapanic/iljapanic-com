@@ -7,7 +7,7 @@ interface QuoteProps {
 }
 
 export const Quote: React.FC<QuoteProps> = ({ children, author, url }) => {
-	var authorEl
+	let authorEl
 
 	if (author) {
 		authorEl = <span>{author}</span>

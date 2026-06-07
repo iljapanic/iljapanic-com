@@ -11,7 +11,7 @@ import type { Article, Page, Note, Post } from 'contentlayer/generated'
 import { cn } from '@/lib/utils'
 import { format, parseISO } from 'date-fns'
 
-export async function Post({
+export function Post({
 	post,
 	className,
 }: {
@@ -23,7 +23,7 @@ export async function Post({
 	let notes: Note[] = []
 
 	if (post.type === 'Note' || post.slug === 'garden') {
-		notes = await allNotes.filter((note) => note.isPublished)
+		notes = allNotes.filter((note) => note.isPublished)
 	}
 
 	return (

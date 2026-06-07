@@ -6,7 +6,7 @@ export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs))
 }
 
-export function sortByTitle(array: any[]) {
+export function sortByTitle<T extends { title: string }>(array: T[]) {
 	array.sort((a, b) => {
 		const titleA = a.title.toUpperCase()
 		const titleB = b.title.toUpperCase()

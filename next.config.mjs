@@ -2,9 +2,8 @@
 
 import createMDX from '@next/mdx'
 import { withContentlayer } from 'next-contentlayer2'
-import { withPlausibleProxy } from 'next-plausible'
 
-const nextConfig = withPlausibleProxy()({
+const nextConfig = {
 	images: {
 		remotePatterns: [
 			{
@@ -27,7 +26,7 @@ const nextConfig = withPlausibleProxy()({
 	async redirects() {
 		return redirects
 	},
-})
+}
 
 const withMDX = createMDX({
 	// Add markdown plugins here, as desired

@@ -8,8 +8,13 @@ export const size = {
 
 export const contentType = 'image/png'
 
-export default async function Image({ params }: { params: { slug: string } }) {
-	const post = allDocuments.find((post) => post.slug === params.slug)
+export default async function Image({
+	params,
+}: {
+	params: Promise<{ slug: string }>
+}) {
+	const { slug } = await params
+	const post = allDocuments.find((post) => post.slug === slug)
 
 	// If no post is found, return a default image
 	const title = post?.title || 'Page not found'
@@ -81,6 +86,7 @@ export default async function Image({ params }: { params: { slug: string } }) {
 					>
 						<img
 							src="https://iljapanic.com/images/iljapanic.jpg"
+							alt="Ilja Panic"
 							width={72}
 							height={72}
 							style={{

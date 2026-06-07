@@ -78,6 +78,7 @@ export default async function Image() {
 					>
 						<img
 							src="https://iljapanic.com/images/iljapanic.jpg"
+							alt="Ilja Panic"
 							width={72}
 							height={72}
 							style={{

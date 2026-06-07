@@ -1,4 +1,3 @@
-import { Book } from '@/components/books/book'
 import { BooksGrid } from '@/components/books/books-grid'
 import { PostHeader } from '@/components/post/post-header'
 import { keystaticReader } from '@/lib/keystatic-reader'

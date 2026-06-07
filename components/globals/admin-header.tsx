@@ -26,7 +26,7 @@ export function AdminHeader({ className }: { className?: string }) {
   return (
     <header
       className={cn(
-        'bg-background/80 sticky top-0 z-10 w-full px-2 py-1.5 backdrop-blur-sm',
+        'bg-background/80 sticky top-0 z-10 w-full px-2 py-1.5 backdrop-blur-xs',
         className,
       )}
     >

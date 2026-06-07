@@ -5,10 +5,12 @@ import Resume from '@/components/resume/resume'
 export default async function CV({
 	searchParams,
 }: {
-	searchParams: { [key: string]: string | string[] | undefined }
+	searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }) {
+	const { s } = await searchParams
+
 	// Check if access parameter is 'welcome'
-	if (searchParams.s !== 'welcome') {
+	if (s !== 'welcome') {
 		redirect('/')
 	}
 

@@ -1,19 +1,19 @@
 import { notFound } from 'next/navigation'
 import { getCommonplaceBookBySlug } from '@/app/actions/commonplace'
 import { CommonplaceItem } from '@/components/commonplace/commonplace-item'
-import { PostHeader } from '@/components/post/post-header'
-import { ArrowLeft, Undo2 } from 'lucide-react'
+import { Undo2 } from 'lucide-react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 
 interface PageProps {
-	params: {
+	params: Promise<{
 		slug: string
-	}
+	}>
 }
 
 export async function generateMetadata({ params }: PageProps) {
-	const book = await getCommonplaceBookBySlug(params.slug)
+	const { slug } = await params
+	const book = await getCommonplaceBookBySlug(slug)
 
 	if (!book) {
 		return {
@@ -29,7 +29,8 @@ export async function generateMetadata({ params }: PageProps) {
 }
 
 export default async function CommonplaceBookPage({ params }: PageProps) {
-	const book = await getCommonplaceBookBySlug(params.slug)
+	const { slug } = await params
+	const book = await getCommonplaceBookBySlug(slug)
 
 	if (!book) {
 		notFound()
