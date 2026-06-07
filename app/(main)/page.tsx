@@ -48,14 +48,14 @@ export default async function Page() {
 				<AboutMdx />
 			</section>
 
-			<section className="mt-20">
+			{/*<section className="mt-20">
 				<h2>Academic writing</h2>
 				<div className="mt-4">
 					{articles && articles.length > 0 && <PostsList posts={articles} />}
 				</div>
-			</section>
+			</section>*/}
 
-			<section className="mt-20">
+			{/*<section className="mt-20">
 				<h2>Garden</h2>
 
 				<div className="mt-4">
@@ -75,9 +75,9 @@ export default async function Page() {
 				</div>
 
 				<SectionLink href="/garden">Explore the garden</SectionLink>
-			</section>
+			</section>*/}
 
-			<section className="mt-20">
+			{/*<section className="mt-20">
 				<h2>Bookshelf</h2>
 
 				<div className="lg:hidden">
@@ -89,7 +89,7 @@ export default async function Page() {
 				</div>
 
 				<SectionLink href="/bookshelf">Browse the bookshelf</SectionLink>
-			</section>
+			</section>*/}
 		</div>
 	)
 }
@@ -107,9 +107,9 @@ function SectionLink({
 		<div className={cn('mt-10 text-left', className)}>
 			<Link
 				href={href}
-				className="group inline-flex items-center gap-2 text-foreground/70 no-underline hover:text-foreground"
+				className="group text-foreground/70 hover:text-foreground inline-flex items-center gap-2 no-underline"
 			>
-				<span className="font-serif text-lg font-normal italic underline decoration-muted-foreground group-hover:decoration-foreground">
+				<span className="decoration-muted-foreground group-hover:decoration-foreground font-serif text-lg font-normal italic underline">
 					{children}
 				</span>
 
