@@ -10,7 +10,7 @@ export const contentType = 'image/png'
 export default async function Image() {
 	// If no post is found, return a default image
 	const title = 'Ilja Panic'
-	const subtitle = 'Technologist, Designer & Information Ecologist'
+	const subtitle = 'Designer & Technologist'
 
 	const fgColor1 = '#191918'
 	const fgColor2 = '#494844'

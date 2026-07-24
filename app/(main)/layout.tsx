@@ -8,13 +8,13 @@ export const metadata = {
 		default: 'Ilja Panic',
 		template: '%s · Ilja Panic',
 	},
-	description: 'Technologist, Designer & Information Ecologist',
+	description: 'Designer & Technologist',
 	keywords:
 		'Ilja Panic, information ecologist, information designer, knowledge management, design technologist, designer and technologist',
 	author: 'Ilja Panic',
 	openGraph: {
 		title: 'Ilja Panic',
-		description: 'Technologist, Designer & Information Ecologist',
+		description: 'Designer & Technologist',
 		type: 'website',
 		authors: ['Ilja Panic'],
 	},

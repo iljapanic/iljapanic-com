@@ -9,7 +9,7 @@ export function Header() {
 						Ilja Panic
 					</Link>
 				</nav>
-				<p className="mt-1 text-muted-foreground">Information Ecologist</p>
+				<p className="mt-1 text-muted-foreground">Designer &amp; Technologist</p>
 			</div>
 		</header>
 	)
