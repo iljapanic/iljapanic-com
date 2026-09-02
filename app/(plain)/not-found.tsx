@@ -1,5 +1,3 @@
-import Image from 'next/image'
-
 import { PostHeader } from '@/components/post/post-header'
 import Link from 'next/link'
 

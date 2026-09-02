@@ -72,12 +72,6 @@ function ToolType({ type }: { type: string }) {
 		}
 	})()
 
-	const iconClassName = cn(
-		'w-4 h-4',
-		// type === 'macos' && 'text-[#000]',
-		// type === 'ios' && 'text-[#000]',
-		// type === 'chrome' && 'text-[#4285F4]',
-	)
 	return (
 		<span className="inline-block text-xs text-muted-foreground">{label}</span>
 	)

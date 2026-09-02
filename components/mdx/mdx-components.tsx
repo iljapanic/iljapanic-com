@@ -11,7 +11,6 @@ import { FigureLegacy } from '@/components/mdx/figure-legacy'
 import { Quote } from '@/components/mdx/quote'
 import { Soundcloud } from '@/components/mdx/soundcloud'
 import { VideoPlayer } from '@/components/mdx/video-player'
-import { getFaviconUrl, getDomain } from '@/lib/utils'
 
 // Define your custom MDX components.
 export const mdxComponents: MDXComponents = {

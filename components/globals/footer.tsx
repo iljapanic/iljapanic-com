@@ -1,10 +1,7 @@
-import { cn, getCurrentTimeCET } from '@/lib/utils'
 import { ThemeToggle } from '@/components/globals/theme-toggle'
 import { Connect } from '@/components/globals/connect'
 
 export function Footer() {
-	const currentYear = new Date().getFullYear()
-
 	return (
 		<footer className="container mt-20 pb-0 print:hidden">
 			<div className="post-wrapper mx-auto">

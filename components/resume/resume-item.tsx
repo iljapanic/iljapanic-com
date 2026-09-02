@@ -1,10 +1,7 @@
 // import Markdown from 'markdown-to-jsx'
 
-import { getYear, convertDate, getDuration, getTodayString } from '@/lib/utils'
+import { getYear, convertDate } from '@/lib/utils'
 import type { ResumeItemType } from '@/types'
-import { v4 } from 'uuid'
-import { ResumeItemLink } from './resume-item-link'
-import { ResumeItemAttachment } from './resume-item-attachment'
 import ResumeItemDescription from '@/components/resume/resume-item-description'
 import Image from 'next/image'
 
@@ -15,7 +12,7 @@ export default function ResumeItem({
 	item: ResumeItemType
 	itemType: 'work' | 'education' | 'volunteering'
 }) {
-	const { name, location, items, type, attachments, logoFilename, url } = item
+	const { name, location, items, type, logoFilename, url } = item
 
 	return (
 		<section className="relative flex items-start gap-4">

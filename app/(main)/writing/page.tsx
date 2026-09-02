@@ -1,6 +1,6 @@
 import { compareDesc } from 'date-fns'
 
-import { allArticles, allNotes } from 'content-collections'
+import { allArticles } from 'content-collections'
 
 import { PostsList } from '@/components/post/posts-list'
 import { PostHeader } from '@/components/post/post-header'

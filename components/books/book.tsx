@@ -1,5 +1,4 @@
 import React from 'react'
-import { v4 } from 'uuid'
 import Image from 'next/image'
 
 import type { Book as BookRecord } from '@/lib/books'

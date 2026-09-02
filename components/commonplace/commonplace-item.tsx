@@ -1,6 +1,5 @@
 'use client'
 
-import { format } from 'date-fns'
 import Link from 'next/link'
 import { useState } from 'react'
 import { CommonplaceBook } from '@/app/actions/commonplace'
@@ -11,10 +10,8 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 } from '@/components/ui/popover'
-import { ExternalLink, MessageSquareMore, StickyNote } from 'lucide-react'
-import { cn } from '@/lib/utils'
+import { ExternalLink, MessageSquareMore } from 'lucide-react'
 import { getCategoryLabel } from '@/lib/readwise'
-import { TagCloud } from '@/components/commonplace/tag-cloud'
 
 interface CommonplaceItemProps {
 	book: CommonplaceBook
