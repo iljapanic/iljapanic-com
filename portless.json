@@ -1,3 +1,4 @@
 {
-	"name": "iljapanic"
+	"name": "iljapanic",
+	"script": "dev:app"
 }
