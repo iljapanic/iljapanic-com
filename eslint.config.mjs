@@ -18,7 +18,7 @@ export default defineConfig([
 		'out/**',
 		'build/**',
 		'next-env.d.ts',
-		'.contentlayer/**',
+		'.content-collections/**',
 		'.obsidian/**',
 		'content/.obsidian/**',
 		'content/.vault-nickname/**',

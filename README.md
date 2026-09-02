@@ -25,6 +25,6 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 
 ## Content management
 
-This site uses [Contentlayer](https://contentlayer.dev/) to consume content from local MDX and JSON files.
+This site uses [Content Collections](https://www.content-collections.dev) to consume content from local MDX and JSON files.
 
 Please note that each content type inside content needs to have a unique file name because `slug` is generated from it.

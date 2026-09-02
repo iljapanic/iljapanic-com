@@ -1,5 +1,5 @@
 import { ImageResponse } from 'next/og'
-import { allDocuments } from 'contentlayer/generated'
+import { allDocuments } from '@/lib/content'
 
 export const size = {
 	width: 1200,

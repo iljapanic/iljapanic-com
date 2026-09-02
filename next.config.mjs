@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 
 import createMDX from '@next/mdx'
-import { withContentlayer } from 'next-contentlayer2'
+import { withContentCollections } from '@content-collections/next'
 
 const r2PublicUrl = process.env.R2_PUBLIC_URL
 if (!r2PublicUrl) {
@@ -45,7 +45,8 @@ const withMDX = createMDX({
 	// Add markdown plugins here, as desired
 })
 
-export default withMDX(withContentlayer(nextConfig))
+// withContentCollections must be the outermost plugin
+export default withContentCollections(withMDX(nextConfig))
 
 /* redirects */
 const redirects = [

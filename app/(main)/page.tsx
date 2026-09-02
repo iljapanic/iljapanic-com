@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { compareDesc } from 'date-fns'
 
-import { allArticles, allNotes } from 'contentlayer/generated'
+import { allArticles, allNotes } from 'content-collections'
 import { getBookSections } from '@/lib/books'
 
 import { PostsList } from '@/components/post/posts-list'

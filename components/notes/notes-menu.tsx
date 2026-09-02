@@ -11,7 +11,7 @@ import {
 import { Cross as Hamburger } from 'hamburger-react'
 
 import { cn } from '@/lib/utils'
-import type { Note } from 'contentlayer/generated'
+import type { Note } from 'content-collections'
 
 function getWordCountIndicator(wordCount: number): string {
 	if (wordCount < 100) {

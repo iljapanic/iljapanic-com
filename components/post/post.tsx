@@ -1,12 +1,12 @@
-import { useMDXComponent } from 'next-contentlayer2/hooks'
+import { MDXContent } from '@content-collections/mdx/react'
 
 import { PostHeader } from '@/components/post/post-header'
 import { mdxComponents } from '@/components/mdx/mdx-components'
 import { NotesMenu, NotesMenuMobile } from '@/components/notes/notes-menu'
 
-import { allNotes } from 'contentlayer/generated'
+import { allNotes } from 'content-collections'
 
-import type { Article, Page, Note, Post } from 'contentlayer/generated'
+import type { Article, Page, Note, Post } from 'content-collections'
 
 import { cn } from '@/lib/utils'
 import { format, parseISO } from 'date-fns'
@@ -21,8 +21,6 @@ export function Post({
 	post: Article | Page | Note | Post
 	className?: string
 }) {
-	const MDXContent = useMDXComponent(post.body.code)
-
 	let notes: Note[] = []
 
 	if (post.type === 'Note' || post.slug === 'garden') {
@@ -55,7 +53,7 @@ export function Post({
 			{/* {post.type === 'Article' && <PostToc />} */}
 
 			<div className={cn('post-content', post.hideHeader ? null : 'mt-8')}>
-				<MDXContent components={mdxComponents} />
+				<MDXContent code={post.body.code} components={mdxComponents} />
 			</div>
 
 			{/* date for garden posts */}

@@ -19,7 +19,7 @@
 # misc
 .DS_Store
 *.pem
-.contentlayer
+.content-collections
 
 # debug
 npm-debug.log*

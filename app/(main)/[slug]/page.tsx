@@ -1,4 +1,4 @@
-import { allDocuments } from 'contentlayer/generated'
+import { allDocuments } from '@/lib/content'
 import { notFound } from 'next/navigation'
 
 import { Post } from '@/components/post/post'
