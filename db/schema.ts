@@ -181,3 +181,5 @@ export type ReadwiseTagRow = typeof readwiseTags.$inferSelect
 export type NewReadwiseTagRow = typeof readwiseTags.$inferInsert
 export type ReadwiseSyncRunRow = typeof readwiseSyncRuns.$inferSelect
 export type NewReadwiseSyncRunRow = typeof readwiseSyncRuns.$inferInsert
+
+export * from './auth-schema'
