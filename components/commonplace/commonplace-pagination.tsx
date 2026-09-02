@@ -1,7 +1,6 @@
 'use client'
 
 import { useSearchParams } from 'next/navigation'
-import Link from 'next/link'
 import {
 	Pagination,
 	PaginationContent,
@@ -70,20 +69,19 @@ export function CommonplacePagination({
 			<PaginationContent>
 				{hasPreviousPage && (
 					<PaginationItem>
-						<Link href={createPageUrl(currentPage - 1)} passHref legacyBehavior>
-							<PaginationPrevious />
-						</Link>
+						<PaginationPrevious href={createPageUrl(currentPage - 1)} />
 					</PaginationItem>
 				)}
 
 				{visiblePages.map((page, index) =>
 					typeof page === 'number' ? (
 						<PaginationItem key={page}>
-							<Link href={createPageUrl(page)} passHref legacyBehavior>
-								<PaginationLink isActive={page === currentPage}>
-									{page}
-								</PaginationLink>
-							</Link>
+							<PaginationLink
+								href={createPageUrl(page)}
+								isActive={page === currentPage}
+							>
+								{page}
+							</PaginationLink>
 						</PaginationItem>
 					) : (
 						<PaginationItem key={`ellipsis-${index}`}>
@@ -94,9 +92,7 @@ export function CommonplacePagination({
 
 				{hasNextPage && (
 					<PaginationItem>
-						<Link href={createPageUrl(currentPage + 1)} passHref legacyBehavior>
-							<PaginationNext />
-						</Link>
+						<PaginationNext href={createPageUrl(currentPage + 1)} />
 					</PaginationItem>
 				)}
 			</PaginationContent>
