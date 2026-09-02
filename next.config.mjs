@@ -3,6 +3,14 @@
 import createMDX from '@next/mdx'
 import { withContentlayer } from 'next-contentlayer2'
 
+const r2PublicUrl = process.env.R2_PUBLIC_URL
+if (!r2PublicUrl) {
+	throw new Error('R2_PUBLIC_URL is not set')
+}
+if (!r2PublicUrl.startsWith('https://')) {
+	throw new Error('R2_PUBLIC_URL must be an absolute https:// URL')
+}
+
 const nextConfig = {
 	images: {
 		remotePatterns: [
@@ -20,6 +28,11 @@ const nextConfig = {
 				protocol: 'https',
 				hostname: 'www.google.com',
 				pathname: '**',
+			},
+			{
+				protocol: 'https',
+				hostname: new URL(r2PublicUrl).hostname,
+				pathname: '/**',
 			},
 		],
 	},

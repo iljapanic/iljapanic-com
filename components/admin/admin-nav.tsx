@@ -16,9 +16,12 @@ export function AdminNav({ email }: { email: string }) {
 
 	return (
 		<nav className="mb-8 flex items-center justify-between border-b pb-4 text-sm">
-			<Link href="/admin" className="font-medium">
-				Admin
-			</Link>
+			<div className="flex items-center gap-4">
+				<Link href="/admin" className="font-medium">
+					Admin
+				</Link>
+				<Link href="/admin/uploads">Uploads</Link>
+			</div>
 			<div className="flex items-center gap-3">
 				<span className="text-muted-foreground">{email}</span>
 				<Button variant="outline" size="sm" onClick={handleSignOut}>
