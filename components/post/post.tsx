@@ -11,6 +11,9 @@ import type { Article, Page, Note, Post } from 'contentlayer/generated'
 import { cn } from '@/lib/utils'
 import { format, parseISO } from 'date-fns'
 
+// Garden floating sidebar is hidden for now; set to true to bring it back
+const SHOW_NOTES_MENU = false
+
 export function Post({
 	post,
 	className,
@@ -66,7 +69,7 @@ export function Post({
 			)}
 
 			{/* Render NotesAccordion for Note type posts */}
-			{(post.type === 'Note' || post.slug === 'garden') && (
+			{SHOW_NOTES_MENU && (post.type === 'Note' || post.slug === 'garden') && (
 				<div>
 					{/* desktop */}
 					<div className="fixed left-0 top-0 hidden h-[100vh] w-[280px] items-center overflow-scroll border-border py-24 pl-10 opacity-60 lg:flex">
