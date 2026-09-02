@@ -1,5 +1,5 @@
 ---
-title: chromium extensions
+title: Chromium extensions
 publishedAt: 2026-08-02
 updatedAt: 2026-09-02
 isPublished: true
