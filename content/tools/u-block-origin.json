@@ -1,9 +1,0 @@
-{
-  "name": "uBlock Origin",
-  "description": "The one and only true ad blocker that's open-source and doesn't track you",
-  "url": "https://chromewebstore.google.com/detail/ublock-origin/cjpalhdlnbpafiamejdnhcphjbkeiagm",
-  "type": [
-    "chrome"
-  ],
-  "icon": "/images/tools/u-block-origin/icon.png"
-}

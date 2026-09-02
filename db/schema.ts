@@ -183,3 +183,4 @@ export type ReadwiseSyncRunRow = typeof readwiseSyncRuns.$inferSelect
 export type NewReadwiseSyncRunRow = typeof readwiseSyncRuns.$inferInsert
 
 export * from './auth-schema'
+export * from './cms-schema'

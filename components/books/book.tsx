@@ -2,21 +2,15 @@ import React from 'react'
 import { v4 } from 'uuid'
 import Image from 'next/image'
 
-import { keystaticReader } from '@/lib/keystatic-reader'
+import type { Book as BookRecord } from '@/lib/books'
 import { cn } from '@/lib/utils'
 
 interface BookProps {
-	slug: string
+	book: BookRecord
 	className?: string
 }
 
-export async function Book({ slug, className }: BookProps) {
-	const book = await keystaticReader.collections.books.read(slug)
-
-	if (!book) {
-		return null
-	}
-
+export function Book({ book, className }: BookProps) {
 	return (
 		<article className={cn('group', className)}>
 			<a
@@ -25,10 +19,10 @@ export async function Book({ slug, className }: BookProps) {
 				rel="noreferrer"
 				className="no-underline"
 			>
-				{book.cover && (
+				{book.coverUrl && (
 					<div>
 						<Image
-							src={book.cover}
+							src={book.coverUrl}
 							width={100}
 							height={100}
 							alt={book.title}

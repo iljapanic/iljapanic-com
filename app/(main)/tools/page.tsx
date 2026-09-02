@@ -1,6 +1,6 @@
 import { Tool } from '@/components/tools/tool'
 import { PostHeader } from '@/components/post/post-header'
-import { keystaticReader } from '@/lib/keystatic-reader'
+import { getToolSections } from '@/lib/tools'
 
 const title = 'Tools'
 const subtitle = 'My favorite tools and resources'
@@ -10,11 +10,10 @@ export const metadata = {
 	description: subtitle,
 }
 
-export default async function Page() {
-	// const nonFiction = await booksNonFiction
-	// const fiction = await booksFiction
+export const dynamic = 'force-dynamic'
 
-	const tools = await keystaticReader.singletons.toolbox.read()
+export default async function Page() {
+	const sections = await getToolSections()
 
 	return (
 		<div>
@@ -23,17 +22,16 @@ export default async function Page() {
 			</div>
 
 			<div className="post-wrapper mx-auto mt-12">
-				{tools &&
-					tools.sections.map((section) => (
-						<div key={section.sectionTitle}>
-							<h2>{section.sectionTitle}</h2>
-							<div className="space-y-6">
-								{section.tools.map((tool) => (
-									<Tool key={tool} slug={tool} />
-								))}
-							</div>
+				{sections.map((section) => (
+					<div key={section.id}>
+						<h2>{section.title}</h2>
+						<div className="space-y-6">
+							{section.tools.map((tool) => (
+								<Tool key={tool.slug} tool={tool} />
+							))}
 						</div>
-					))}
+					</div>
+				))}
 			</div>
 		</div>
 	)

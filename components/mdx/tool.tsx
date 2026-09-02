@@ -1,6 +1,6 @@
 import Image from 'next/image'
 
-import { keystaticReader } from '@/lib/keystatic-reader'
+import { getToolBySlug } from '@/lib/tools'
 import { cn } from '@/lib/utils'
 
 interface ToolProps {
@@ -10,7 +10,7 @@ interface ToolProps {
 }
 
 export async function Tool({ slug, iconSize = 20, inline = false }: ToolProps) {
-	const tool = await keystaticReader.collections.tools.read(slug)
+	const tool = await getToolBySlug(slug)
 
 	if (!tool) {
 		return null
@@ -35,16 +35,16 @@ export async function Tool({ slug, iconSize = 20, inline = false }: ToolProps) {
 						alt={tool.name}
 						unoptimized // nextjs doesn't optimize SVGs
 					/>
-				) : tool.icon ? (
+				) : tool.iconUrl ? (
 					<Image
 						height={iconSize}
 						width={iconSize}
-						src={tool.icon}
-						alt={tool?.name}
+						src={tool.iconUrl}
+						alt={tool.name}
 					/>
 				) : null}
 
-				{tool?.name}
+				{tool.name}
 			</span>
 		</a>
 	)

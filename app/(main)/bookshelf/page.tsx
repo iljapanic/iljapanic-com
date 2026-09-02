@@ -1,6 +1,6 @@
 import { BooksGrid } from '@/components/books/books-grid'
 import { PostHeader } from '@/components/post/post-header'
-import { keystaticReader } from '@/lib/keystatic-reader'
+import { getBookSections } from '@/lib/books'
 
 const title = 'Bookshelf'
 const subtitle = 'Texts that shaped how I view the world'
@@ -10,11 +10,10 @@ export const metadata = {
 	description: subtitle,
 }
 
-export default async function Page() {
-	// const nonFiction = await booksNonFiction
-	// const fiction = await booksFiction
+export const dynamic = 'force-dynamic'
 
-	const books = await keystaticReader.singletons.bookshelf.read()
+export default async function Page() {
+	const sections = await getBookSections()
 
 	return (
 		<div>
@@ -23,13 +22,12 @@ export default async function Page() {
 			</div>
 
 			<div className="post-wide-wrapper mx-auto">
-				{books &&
-					books.sections.map((section) => (
-						<div key={section.sectionTitle} className="mb-40">
-							{/* <h2>{section.sectionTitle}</h2> */}
-							<BooksGrid books={section.books} />
-						</div>
-					))}
+				{sections.map((section) => (
+					<div key={section.id} className="mb-40">
+						{/* <h2>{section.title}</h2> */}
+						<BooksGrid books={section.books} />
+					</div>
+				))}
 			</div>
 		</div>
 	)

@@ -1,21 +1,15 @@
 import Image from 'next/image'
 
-import { keystaticReader } from '@/lib/keystatic-reader'
+import type { Tool as ToolRecord } from '@/lib/tools'
 import { cn } from '@/lib/utils'
 
 interface ToolProps {
-	slug: string
+	tool: ToolRecord
 	className?: string
 }
 
-export async function Tool({ slug, className }: ToolProps) {
-	const tool = await keystaticReader.collections.tools.read(slug)
-
+export function Tool({ tool, className }: ToolProps) {
 	const iconSize = 20
-
-	if (!tool) {
-		return null
-	}
 
 	return (
 		<a
@@ -35,20 +29,20 @@ export async function Tool({ slug, className }: ToolProps) {
 								alt={tool.name}
 								unoptimized // nextjs doesn't optimize SVGs
 							/>
-						) : tool.icon ? (
+						) : tool.iconUrl ? (
 							<Image
 								height={iconSize}
 								width={iconSize}
-								src={tool.icon}
-								alt={tool?.name}
+								src={tool.iconUrl}
+								alt={tool.name}
 							/>
 						) : null}
 
-						<h2 className="my-0 font-medium">{tool?.name}</h2>
+						<h2 className="my-0 font-medium">{tool.name}</h2>
 					</div>
-					{tool.type && (
+					{tool.platforms && (
 						<div className="flex items-center gap-2">
-							{[...tool.type]
+							{[...tool.platforms]
 								.sort((a, b) => a.localeCompare(b))
 								.map((type) => (
 									<ToolType key={type} type={type} />
@@ -56,7 +50,7 @@ export async function Tool({ slug, className }: ToolProps) {
 						</div>
 					)}
 				</header>
-				{tool?.description && <p className="text-sm">{tool.description}</p>}
+				{tool.description && <p className="text-sm">{tool.description}</p>}
 			</div>
 		</a>
 	)

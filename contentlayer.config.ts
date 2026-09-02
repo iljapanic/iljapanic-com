@@ -26,11 +26,6 @@ const contentLayerConfig = makeSource({
 		/* MDX snippets to be used manually via native Nextjs components */
 		'snippets',
 
-		/* managed by keystatic */
-		'singletons',
-		'books',
-		'tools',
-
 		/* obsidian vault settings */
 		'.obsidian',
 	],

@@ -1,9 +1,0 @@
-{
-  "name": "Unclutter",
-  "description": "Make any page easier on your eyes, particularly useful for old-school websites with paragraphs spanning the full width of the screen",
-  "url": "https://chromewebstore.google.com/detail/unclutter-%E2%80%94-modern-reader/ibckhpijbdmdobhhhodkceffdngnglpk",
-  "type": [
-    "chrome"
-  ],
-  "icon": "/images/tools/unclutter/icon.png"
-}

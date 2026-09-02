@@ -1,7 +1,6 @@
 import { compareDesc } from 'date-fns'
 
 import { allArticles, allNotes } from 'contentlayer/generated'
-import { keystaticReader } from '@/lib/keystatic-reader'
 
 import { PostsList } from '@/components/post/posts-list'
 import { PostHeader } from '@/components/post/post-header'

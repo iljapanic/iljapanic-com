@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { compareDesc } from 'date-fns'
 
 import { allArticles, allNotes } from 'contentlayer/generated'
-import { keystaticReader } from '@/lib/keystatic-reader'
+import { getBookSections } from '@/lib/books'
 
 import { PostsList } from '@/components/post/posts-list'
 import NowMdx from '@/content/snippets/now.mdx'
@@ -12,6 +12,8 @@ import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { ArrowRight, CornerDownRight, Redo } from 'lucide-react'
 
+export const dynamic = 'force-dynamic'
+
 export default async function Page() {
 	const articles = await allArticles
 		.filter((article) => article.isPublished)
@@ -19,12 +21,12 @@ export default async function Page() {
 			compareDesc(new Date(a.publishedAt), new Date(b.publishedAt)),
 		)
 
-	const books = await keystaticReader.singletons.bookshelf.read()
+	const bookSections = await getBookSections()
 	const garden = await allNotes.filter(
 		(note) => note.isPublished && note.isFeatured,
 	)
 
-	const firstSection = books?.sections[0]
+	const firstSection = bookSections[0]
 	const randomBooks = [...(firstSection?.books ?? [])].slice(0, 6)
 
 	return (

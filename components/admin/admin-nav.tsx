@@ -20,6 +20,8 @@ export function AdminNav({ email }: { email: string }) {
 				<Link href="/admin" className="font-medium">
 					Admin
 				</Link>
+				<Link href="/admin/tools">Tools</Link>
+				<Link href="/admin/books">Books</Link>
 				<Link href="/admin/uploads">Uploads</Link>
 			</div>
 			<div className="flex items-center gap-3">
