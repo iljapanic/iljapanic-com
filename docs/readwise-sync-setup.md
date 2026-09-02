@@ -1,208 +1,91 @@
-# Readwise Sync API Setup
+# Readwise sync
 
-This document explains how to set up and use the Readwise highlights sync functionality.
+The commonplace page is fed by a daily sync from Readwise into a Neon Postgres
+database via Drizzle ORM. Only Readwise books tagged `@share` are fetched and
+stored; every run is a full reconcile, so tag removals, deleted highlights and
+edits all propagate.
 
-## Overview
+## Environment variables
 
-The Readwise sync API allows you to automatically sync all your highlights from Readwise into your Postgres database. It's designed to run via cron jobs and handles:
+| Variable                | Used by                                         |
+| ----------------------- | ----------------------------------------------- |
+| `DATABASE_URL`          | Drizzle client (`db/index.ts`) and drizzle-kit  |
+| `READWISE_ACCESS_TOKEN` | Sync job (`lib/readwise-sync.ts`)               |
+| `API_KEY`               | `/api/commonplace/sync` and `/api/commonplace/shared` |
+| `CRON_SECRET`           | `/api/cron/readwise-sync`                       |
 
-- Incremental syncing (only fetches changes since last sync)
-- Duplicate prevention using upsert operations
-- Complete data model including books, highlights, and tags
-- Comprehensive error handling and logging
+Every variable is required where it is read; a missing value throws or returns
+a 500 with an explicit message. There are no fallbacks. `.env.example` lists
+all of them. Get the Readwise token at
+[readwise.io/access_token](https://readwise.io/access_token).
 
-## Environment Variables
+## Database
 
-Add these to your `.env` file:
+Schema lives in `db/schema.ts`, migrations in `drizzle/`.
 
 ```bash
-# Database
-DATABASE_URL="postgresql://username:password@localhost:5432/your_database_name"
-
-# API Authentication
-API_KEY="your-secure-api-key-here"
-
-# Readwise Integration
-READWISE_ACCESS_TOKEN="your-readwise-access-token-here"
+bun run db:generate   # write a new migration from schema changes into drizzle/
+bun run db:migrate    # apply pending migrations to DATABASE_URL
+bun run db:studio     # browse the database
 ```
 
-### Getting Your Readwise Access Token
+`bun run db:push` exists for local experimentation only; never use it against
+production. Commit generated migration files.
 
-1. Go to [readwise.io/access_token](https://readwise.io/access_token)
-2. Copy your access token
-3. Add it to your `.env` file as `READWISE_ACCESS_TOKEN`
+Tables (all prefixed `readwise_` so later CMS tables do not collide):
 
-## Database Setup
+- `readwise_books`: one row per shared Readwise book, keyed by `readwise_id`,
+  with a unique `slug` used in `/commonplace/<slug>` URLs.
+- `readwise_highlights`: highlights per book, keyed by `readwise_id`.
+- `readwise_tags`: normalised tag names (`name`) plus display `label`.
+- `readwise_book_tags`, `readwise_highlight_tags`: many-to-many links.
+- `readwise_sync_runs`: one row per sync run with status, trigger and counts.
 
-1. **Run Prisma migrations** (create the migration first):
-   ```bash
-   npx prisma migrate dev --name init
-   ```
+## Scheduled sync (Vercel cron)
 
-2. **Or push the schema directly** (for development):
-   ```bash
-   npx prisma db push
-   ```
+`vercel.json` schedules `GET /api/cron/readwise-sync` at `0 0 * * *` (midnight
+UTC). Vercel sends `Authorization: Bearer <CRON_SECRET>`; the route returns 401
+without it and 500 if `CRON_SECRET` is unset.
 
-## API Endpoints
+## Manual trigger
 
-### POST `/api/commonplace/sync`
-
-Syncs highlights from Readwise to your database.
-
-**Authentication**: Required (API key)
-
-**Headers**:
-```
-Authorization: Bearer your-api-key
-# OR
-x-api-key: your-api-key
+```bash
+curl -X POST https://iljapanic.com/api/commonplace/sync \
+  -H "Authorization: Bearer $API_KEY"
 ```
 
-**Response**:
+The `x-api-key: $API_KEY` header works too. Response:
+
 ```json
-{
-  "success": true,
-  "message": "Sync completed successfully",
-  "bookCount": 42,
-  "highlightCount": 1337
-}
+{ "runId": 12, "bookCount": 77, "highlightCount": 540, "removedBookCount": 0, "durationMs": 8123 }
 ```
 
-### GET `/api/commonplace/sync`
-
-Gets sync status and database statistics.
-
-**Authentication**: Required (API key)
-
-**Response**:
-```json
-{
-  "stats": {
-    "totalBooks": 42,
-    "totalHighlights": 1337,
-    "totalTags": 89
-  },
-  "recentSyncs": [
-    {
-      "id": 1,
-      "syncedAt": "2024-01-01T12:00:00Z",
-      "status": "success",
-      "message": "Successfully synced 5 books and 23 highlights",
-      "bookCount": 5,
-      "highlightCount": 23
-    }
-  ]
-}
-```
-
-## Usage Examples
-
-### Manual Sync via cURL
+## Status endpoint
 
 ```bash
-curl -X POST "http://localhost:3000/api/commonplace/sync" \
-  -H "Authorization: Bearer your-api-key" \
-  -H "Content-Type: application/json"
+curl https://iljapanic.com/api/commonplace/sync -H "Authorization: Bearer $API_KEY"
 ```
 
-### Daily Cron Job
+Returns `stats` (`totalBooks`, `totalHighlights`, `totalTags`) and
+`recentRuns`, the last 10 rows of `readwise_sync_runs` newest first.
 
-Add this to your crontab to sync daily at 2 AM:
+## Reconcile algorithm
 
-```bash
-0 2 * * * curl -X POST "https://yourdomain.com/api/commonplace/sync" -H "Authorization: Bearer your-api-key" > /dev/null 2>&1
-```
+`runReadwiseSync(trigger)` in `lib/readwise-sync.ts`:
 
-### Using a service like GitHub Actions
+- Lists every book via `GET /api/v2/books/` and keeps those with a tag equal
+  to `@share` (case-insensitive). Nothing else is fetched.
+- Exports those books in chunks of 50 via `GET /api/v2/export/?ids=...`,
+  dropping deleted books and deleted or discarded highlights. Tag names are
+  trimmed, lower-cased and whitespace-joined with `-`; `@share` itself is
+  never stored.
+- Assigns slugs: existing rows keep theirs; new books get `slugify(title)`
+  (max 80 chars) suffixed with the Readwise id on collision.
+- In one transaction: deletes books no longer shared (cascading), upserts
+  tags, books and highlights, rebuilds the tag link tables, and deletes tags
+  nothing references any more.
+- Records the run in `readwise_sync_runs` (`running` → `success` or `error`
+  with the message) and returns the counts.
 
-```yaml
-name: Sync Readwise
-on:
-  schedule:
-    - cron: '0 2 * * *'  # Daily at 2 AM UTC
-  workflow_dispatch:  # Allow manual trigger
-
-jobs:
-  sync:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Sync Readwise
-        run: |
-          curl -X POST "${{ secrets.SYNC_URL }}" \
-            -H "Authorization: Bearer ${{ secrets.API_KEY }}" \
-            -H "Content-Type: application/json"
-```
-
-## Database Schema
-
-The sync creates the following tables:
-
-- **readwise_books**: Book/article metadata from Readwise
-- **readwise_highlights**: Individual highlights with text, notes, and metadata
-- **readwise_tags**: Tag names (shared between books and highlights)
-- **readwise_book_tags**: Many-to-many relationship between books and tags
-- **readwise_highlight_tags**: Many-to-many relationship between highlights and tags
-- **readwise_sync_logs**: Audit trail of sync operations
-
-## Key Features
-
-### Incremental Sync
-- Only fetches data updated since the last successful sync
-- Uses the `updatedAfter` parameter from Readwise API
-- Significantly faster for regular syncs
-
-### Duplicate Prevention
-- Uses Prisma's `upsert` operations
-- Books are identified by `user_book_id` from Readwise
-- Highlights are identified by `readwise_id` from Readwise
-- Tags are identified by name
-
-### Error Handling
-- Comprehensive error logging in `sync_logs` table
-- Failed syncs don't prevent future syncs
-- Detailed error messages for debugging
-
-### Data Integrity
-- Foreign key relationships ensure data consistency
-- Soft deletes supported (via `is_deleted` fields)
-- Timestamps track creation and updates
-
-## Troubleshooting
-
-### Common Issues
-
-1. **"Invalid Readwise access token"**
-   - Verify your token at [readwise.io/access_token](https://readwise.io/access_token)
-   - Make sure `READWISE_ACCESS_TOKEN` is set correctly
-
-2. **"Unauthorized"**
-   - Check that `API_KEY` is set in your environment
-   - Verify you're sending the correct header
-
-3. **Database connection errors**
-   - Verify `DATABASE_URL` is correct
-   - Ensure Postgres is running and accessible
-   - Run `npx prisma db push` to ensure schema is up to date
-
-### Checking Logs
-
-Query recent sync logs:
-
-```sql
-SELECT * FROM readwise_sync_logs ORDER BY synced_at DESC LIMIT 10;
-```
-
-Check for failed syncs:
-
-```sql
-SELECT * FROM readwise_sync_logs WHERE status = 'error' ORDER BY synced_at DESC;
-```
-
-## Rate Limiting
-
-The Readwise API has rate limits:
-- Default: 240 requests per minute
-- Export endpoint: 20 requests per minute
-
-The sync includes a 100ms delay between paginated requests to be respectful of these limits.
+HTTP 429 from Readwise is retried up to 3 times honouring `Retry-After`; any
+other error aborts the run and is recorded on the run row.

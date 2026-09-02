@@ -1,27 +1,52 @@
 'use server'
 
-import { prisma } from '@/prisma/client'
+import {
+	and,
+	asc,
+	count,
+	countDistinct,
+	desc,
+	eq,
+	exists,
+	lt,
+	notInArray,
+	sql,
+	type SQL,
+} from 'drizzle-orm'
+import { alias, type AnyPgColumn } from 'drizzle-orm/pg-core'
+import { db } from '@/db'
+import { readwiseBookTags, readwiseBooks, readwiseTags } from '@/db/schema'
+import { normalizeTagName } from '@/lib/readwise'
+
+export interface CommonplaceTag {
+	name: string
+	label: string
+}
+
+export interface CommonplaceHighlight {
+	id: string
+	text: string
+	note?: string
+	location?: number
+	highlightedAt?: string
+	tags: CommonplaceTag[]
+}
 
 export interface CommonplaceBook {
 	id: string
+	slug: string
 	title: string
 	author?: string
 	readableTitle: string
 	source: string
+	category: string
 	coverImageUrl?: string
 	sourceUrl?: string
-	readwiseUrl?: string
-	category?: string
-	slug?: string
-	highlights: Array<{
-		id: string
-		text: string
-		note?: string
-		location?: number
-		highlightedAt: string
-		tags: string[]
-	}>
-	tags: string[]
+	readwiseUrl: string
+	highlightCount: number
+	lastHighlightAt?: string
+	tags: CommonplaceTag[]
+	highlights: CommonplaceHighlight[]
 }
 
 export interface CommonplacePagination {
@@ -44,28 +69,77 @@ export interface TagWithCount {
 	count: number
 }
 
-// Helper function to normalize tag names (lowercase)
-function normalizeTagName(tag: string): string {
-	return tag.toLowerCase()
+const PAGE_SIZE = 10
+
+// Normalize incoming selected tags with the same rule as the sync, drop
+// empties and dedupe.
+function normalizeSelectedTags(selectedTags: string[]): string[] {
+	const names = selectedTags
+		.map(normalizeTagName)
+		.filter((name) => name !== '')
+	return Array.from(new Set(names))
 }
 
-// Helper function to format tag display name (kebab-case to spaces)
-function formatTagDisplayName(tag: string): string {
-	return tag.toLowerCase().replace(/-/g, ' ')
-}
-
-// Helper function to find all variations of a tag name (different cases)
-async function findTagVariations(tagName: string): Promise<string[]> {
-	const tags = await prisma.tag.findMany({
-		where: {
-			name: {
-				mode: 'insensitive',
-				equals: tagName,
-			},
-		},
-		select: { name: true },
+// One EXISTS per selected tag, correlated on the given book id column, so a
+// book matches only when it carries every selected tag (AND semantics).
+function hasEveryTag(bookId: AnyPgColumn, tags: string[]): SQL[] {
+	return tags.map((name) => {
+		const bookTags = alias(readwiseBookTags, 'filter_book_tags')
+		const tag = alias(readwiseTags, 'filter_tags')
+		return exists(
+			db
+				.select({ one: sql`1` })
+				.from(bookTags)
+				.innerJoin(tag, eq(bookTags.tagId, tag.id))
+				.where(and(eq(bookTags.bookId, bookId), eq(tag.name, name))),
+		)
 	})
-	return tags.map((t) => t.name)
+}
+
+const bookWith = {
+	bookTags: { with: { tag: true } },
+	highlights: {
+		orderBy: (highlights: { highlightedAt: AnyPgColumn }) => [
+			sql`${highlights.highlightedAt} desc nulls last`,
+		],
+		with: { highlightTags: { with: { tag: true } } },
+	},
+} as const
+
+type BookWithRelations = NonNullable<
+	Awaited<ReturnType<typeof db.query.readwiseBooks.findFirst<{ with: typeof bookWith }>>>
+>
+
+function toCommonplaceBook(book: BookWithRelations): CommonplaceBook {
+	return {
+		id: book.id.toString(),
+		slug: book.slug,
+		title: book.title,
+		author: book.author ?? undefined,
+		readableTitle: book.readableTitle ?? book.title,
+		source: book.source,
+		category: book.category,
+		coverImageUrl: book.coverImageUrl ?? undefined,
+		sourceUrl: book.sourceUrl ?? undefined,
+		readwiseUrl: book.readwiseUrl,
+		highlightCount: book.highlightCount,
+		lastHighlightAt: book.lastHighlightAt?.toISOString(),
+		tags: book.bookTags.map((bookTag) => ({
+			name: bookTag.tag.name,
+			label: bookTag.tag.label,
+		})),
+		highlights: book.highlights.map((highlight) => ({
+			id: highlight.id.toString(),
+			text: highlight.text,
+			note: highlight.note ?? undefined,
+			location: highlight.location ?? undefined,
+			highlightedAt: highlight.highlightedAt?.toISOString(),
+			tags: highlight.highlightTags.map((highlightTag) => ({
+				name: highlightTag.tag.name,
+				label: highlightTag.tag.label,
+			})),
+		})),
+	}
 }
 
 export async function getCommonplaceData(
@@ -73,192 +147,35 @@ export async function getCommonplaceData(
 	selectedTags: string[] = [],
 ): Promise<CommonplaceData | null> {
 	try {
-		console.log('getCommonplaceData called with:', { page, selectedTags })
-		const pageSize = 10
-		const skip = (page - 1) * pageSize
+		const tags = normalizeSelectedTags(selectedTags)
+		const offset = (page - 1) * PAGE_SIZE
 
-		// Normalize selected tags to lowercase
-		const normalizedSelectedTags = selectedTags.map(normalizeTagName)
+		const [{ totalCount }] = await db
+			.select({ totalCount: count() })
+			.from(readwiseBooks)
+			.where(tags.length > 0 ? and(...hasEveryTag(readwiseBooks.id, tags)) : undefined)
 
-		// Common include structure
-		const includeStructure = {
-			highlights: {
-				where: {
-					isDeleted: false,
-				},
-				include: {
-					tags: {
-						include: {
-							tag: true,
-						},
-					},
-				},
-				orderBy: {
-					highlightedAt: 'desc' as const,
-				},
-			},
-			bookTags: {
-				include: {
-					tag: true,
-				},
-			},
-		}
+		const books = await db.query.readwiseBooks.findMany({
+			where:
+				tags.length > 0
+					? (book) => and(...hasEveryTag(book.id, tags))
+					: undefined,
+			orderBy: (book) => [
+				sql`${book.lastHighlightAt} desc nulls last`,
+				desc(book.id),
+			],
+			limit: PAGE_SIZE,
+			offset,
+			with: bookWith,
+		})
 
-		let sharedBooks
-		let totalCount
-
-		if (normalizedSelectedTags.length > 0) {
-			// Get @share tag
-			const shareTagVariations = await findTagVariations('@share')
-
-			// Get all variations of selected tags (case insensitive)
-			const selectedTagVariations: string[] = []
-			for (const tag of normalizedSelectedTags) {
-				const variations = await findTagVariations(tag)
-				selectedTagVariations.push(...variations)
-			}
-
-			if (shareTagVariations.length === 0) {
-				return {
-					data: [],
-					pagination: {
-						page,
-						pageSize,
-						totalCount: 0,
-						totalPages: 0,
-						hasNextPage: false,
-						hasPreviousPage: false,
-					},
-				}
-			}
-
-			// Get books that have @share AND all selected tags (case insensitive)
-			const booksWithAllTags = await prisma.book.findMany({
-				where: {
-					isDeleted: false,
-					bookTags: {
-						some: {
-							tag: {
-								name: {
-									in: [...shareTagVariations, ...selectedTagVariations],
-								},
-							},
-						},
-					},
-				},
-				include: {
-					bookTags: {
-						include: {
-							tag: true,
-						},
-					},
-				},
-			})
-
-			// Filter books that have @share AND ALL selected tags (normalized comparison)
-			const filteredBooks = booksWithAllTags.filter((book) => {
-				const bookTagNames = book.bookTags.map((bt) =>
-					normalizeTagName(bt.tag.name),
-				)
-				const hasShare = bookTagNames.some(
-					(name) => normalizeTagName(name) === '@share',
-				)
-				const hasAllSelectedTags = normalizedSelectedTags.every((selectedTag) =>
-					bookTagNames.some(
-						(bookTag) => normalizeTagName(bookTag) === selectedTag,
-					),
-				)
-				return hasShare && hasAllSelectedTags
-			})
-
-			const filteredBookIds = filteredBooks.map((book) => book.id)
-
-			// Get paginated results
-			sharedBooks = await prisma.book.findMany({
-				where: {
-					id: { in: filteredBookIds },
-				},
-				include: includeStructure,
-				orderBy: {
-					createdAt: 'desc',
-				},
-				skip,
-				take: pageSize,
-			})
-
-			totalCount = filteredBooks.length
-		} else {
-			// Simple query when no additional tags are selected
-			sharedBooks = await prisma.book.findMany({
-				where: {
-					isDeleted: false,
-					bookTags: {
-						some: {
-							tag: {
-								name: {
-									mode: 'insensitive',
-									equals: '@share',
-								},
-							},
-						},
-					},
-				},
-				include: includeStructure,
-				orderBy: {
-					createdAt: 'desc',
-				},
-				skip,
-				take: pageSize,
-			})
-
-			totalCount = await prisma.book.count({
-				where: {
-					isDeleted: false,
-					bookTags: {
-						some: {
-							tag: {
-								name: {
-									mode: 'insensitive',
-									equals: '@share',
-								},
-							},
-						},
-					},
-				},
-			})
-		}
-
-		// Transform the data to match our interface
-		const transformedBooks: CommonplaceBook[] = sharedBooks.map((book) => ({
-			id: book.id.toString(),
-			title: book.title,
-			author: book.author || undefined,
-			readableTitle: book.readableTitle || book.title,
-			source: book.source,
-			coverImageUrl: book.coverImageUrl || undefined,
-			sourceUrl: book.sourceUrl || undefined,
-			readwiseUrl: book.readwiseUrl,
-			category: book.category || undefined,
-			slug: book.slug || undefined,
-			tags: book.bookTags.map((bt) => formatTagDisplayName(bt.tag.name)),
-			highlights: book.highlights.map((highlight) => ({
-				id: highlight.id.toString(),
-				text: highlight.text,
-				note: highlight.note || undefined,
-				location: highlight.location || undefined,
-				highlightedAt:
-					highlight.highlightedAt?.toISOString() || new Date().toISOString(),
-				tags: highlight.tags.map((ht) => formatTagDisplayName(ht.tag.name)),
-			})),
-		}))
-
-		const totalPages = Math.ceil(totalCount / pageSize)
+		const totalPages = Math.ceil(totalCount / PAGE_SIZE)
 
 		return {
-			data: transformedBooks,
+			data: books.map(toCommonplaceBook),
 			pagination: {
 				page,
-				pageSize,
+				pageSize: PAGE_SIZE,
 				totalCount,
 				totalPages,
 				hasNextPage: page < totalPages,
@@ -267,7 +184,7 @@ export async function getCommonplaceData(
 		}
 	} catch (error) {
 		console.error('Error fetching commonplace data:', error)
-		return null
+		throw error
 	}
 }
 
@@ -275,166 +192,46 @@ export async function getAvailableTags(
 	selectedTags: string[] = [],
 ): Promise<TagWithCount[]> {
 	try {
-		// Normalize selected tags
-		const normalizedSelectedTags = selectedTags.map(normalizeTagName)
+		const tags = normalizeSelectedTags(selectedTags)
+		const bookCount = countDistinct(readwiseBookTags.bookId)
 
-		if (normalizedSelectedTags.length === 0) {
-			// If no tags selected, return all tags from books with @share tag (excluding @share itself)
-			const booksWithShare = await prisma.book.findMany({
-				where: {
-					isDeleted: false,
-					bookTags: {
-						some: {
-							tag: {
-								name: {
-									mode: 'insensitive',
-									equals: '@share',
-								},
-							},
-						},
-					},
-				},
-				include: {
-					bookTags: {
-						include: {
-							tag: true,
-						},
-					},
-				},
-			})
-
-			// Count tags from these books
-			const tagCounts = new Map<
-				string,
-				{ displayName: string; count: number }
-			>()
-
-			booksWithShare.forEach((book) => {
-				book.bookTags.forEach((bt) => {
-					const normalizedTagName = normalizeTagName(bt.tag.name)
-					if (normalizedTagName !== '@share') {
-						const displayName = formatTagDisplayName(bt.tag.name)
-						const existing = tagCounts.get(normalizedTagName)
-						if (existing) {
-							existing.count += 1
-						} else {
-							tagCounts.set(normalizedTagName, { displayName, count: 1 })
-						}
-					}
-				})
-			})
-
-			return Array.from(tagCounts.entries())
-				.map(([name, { displayName, count }]) => ({ name, displayName, count }))
-				.sort((a, b) => {
-					// Sort by count first (descending)
-					if (a.count !== b.count) {
-						return b.count - a.count
-					}
-					// Then alphabetically by display name
-					return a.displayName.localeCompare(b.displayName)
-				})
-		} else {
-			// Get books that have @share AND all selected tags using the same approach as above
-			const shareTagVariations = await findTagVariations('@share')
-
-			const selectedTagVariations: string[] = []
-			for (const tag of normalizedSelectedTags) {
-				const variations = await findTagVariations(tag)
-				selectedTagVariations.push(...variations)
-			}
-
-			if (shareTagVariations.length === 0) {
-				return []
-			}
-
-			const booksWithAllTags = await prisma.book.findMany({
-				where: {
-					isDeleted: false,
-					bookTags: {
-						some: {
-							tag: {
-								name: {
-									in: [...shareTagVariations, ...selectedTagVariations],
-								},
-							},
-						},
-					},
-				},
-				include: {
-					bookTags: {
-						include: {
-							tag: true,
-						},
-					},
-				},
-			})
-
-			// Filter books that have @share AND ALL selected tags
-			const filteredBooks = booksWithAllTags.filter((book) => {
-				const bookTagNames = book.bookTags.map((bt) =>
-					normalizeTagName(bt.tag.name),
-				)
-				const hasShare = bookTagNames.some(
-					(name) => normalizeTagName(name) === '@share',
-				)
-				const hasAllSelectedTags = normalizedSelectedTags.every((selectedTag) =>
-					bookTagNames.some(
-						(bookTag) => normalizeTagName(bookTag) === selectedTag,
-					),
-				)
-				return hasShare && hasAllSelectedTags
-			})
-
-			// If only one book matches, don't show additional tags
-			if (filteredBooks.length <= 1) {
-				return []
-			}
-
-			// Count remaining tags from these books (excluding @share and selected tags)
-			const tagCounts = new Map<
-				string,
-				{ displayName: string; count: number }
-			>()
-
-			filteredBooks.forEach((book) => {
-				book.bookTags.forEach((bt) => {
-					const normalizedTagName = normalizeTagName(bt.tag.name)
-					if (
-						normalizedTagName !== '@share' &&
-						!normalizedSelectedTags.includes(normalizedTagName)
-					) {
-						const displayName = formatTagDisplayName(bt.tag.name)
-						const existing = tagCounts.get(normalizedTagName)
-						if (existing) {
-							existing.count += 1
-						} else {
-							tagCounts.set(normalizedTagName, { displayName, count: 1 })
-						}
-					}
-				})
-			})
-
-			// Only return tags that appear on some (but not all) of the filtered books
-			// This ensures that selecting the tag will actually change the result set
-			const totalFilteredBooks = filteredBooks.length
-			const meaningfulTags = Array.from(tagCounts.entries())
-				.filter(([_, { count }]) => count > 0 && count < totalFilteredBooks)
-				.map(([name, { displayName, count }]) => ({ name, displayName, count }))
-				.sort((a, b) => {
-					// Sort by count first (descending)
-					if (a.count !== b.count) {
-						return b.count - a.count
-					}
-					// Then alphabetically by display name
-					return a.displayName.localeCompare(b.displayName)
-				})
-
-			return meaningfulTags
+		const conditions = hasEveryTag(readwiseBooks.id, tags)
+		if (tags.length > 0) {
+			conditions.push(notInArray(readwiseTags.name, tags))
 		}
+
+		// When tags are selected, drop tags carried by every matching book: they
+		// would not narrow the result.
+		const matchingBooks = alias(readwiseBooks, 'matching_books')
+		const having =
+			tags.length > 0
+				? lt(
+						bookCount,
+						db
+							.select({ value: count() })
+							.from(matchingBooks)
+							.where(and(...hasEveryTag(matchingBooks.id, tags))),
+					)
+				: undefined
+
+		const rows = await db
+			.select({
+				name: readwiseTags.name,
+				displayName: readwiseTags.label,
+				count: bookCount,
+			})
+			.from(readwiseTags)
+			.innerJoin(readwiseBookTags, eq(readwiseBookTags.tagId, readwiseTags.id))
+			.innerJoin(readwiseBooks, eq(readwiseBooks.id, readwiseBookTags.bookId))
+			.where(conditions.length > 0 ? and(...conditions) : undefined)
+			.groupBy(readwiseTags.id, readwiseTags.name, readwiseTags.label)
+			.having(having)
+			.orderBy(desc(bookCount), asc(readwiseTags.label))
+
+		return rows
 	} catch (error) {
 		console.error('Error fetching available tags:', error)
-		return []
+		throw error
 	}
 }
 
@@ -442,81 +239,15 @@ export async function getCommonplaceBookBySlug(
 	slug: string,
 ): Promise<CommonplaceBook | null> {
 	try {
-		console.log('getCommonplaceBookBySlug called with:', { slug })
-
-		// Common include structure for fetching book with highlights
-		const includeStructure = {
-			highlights: {
-				where: {
-					isDeleted: false,
-				},
-				include: {
-					tags: {
-						include: {
-							tag: true,
-						},
-					},
-				},
-				orderBy: {
-					highlightedAt: 'desc' as const,
-				},
-			},
-			bookTags: {
-				include: {
-					tag: true,
-				},
-			},
-		}
-
-		// Fetch the book by slug, ensuring it has the @share tag
-		const book = await prisma.book.findFirst({
-			where: {
-				slug: slug,
-				isDeleted: false,
-				bookTags: {
-					some: {
-						tag: {
-							name: {
-								mode: 'insensitive',
-								equals: '@share',
-							},
-						},
-					},
-				},
-			},
-			include: includeStructure,
+		const book = await db.query.readwiseBooks.findFirst({
+			where: eq(readwiseBooks.slug, slug),
+			with: bookWith,
 		})
 
-		if (!book) {
-			return null
-		}
-
-		// Transform the data to match our interface
-		const transformedBook: CommonplaceBook = {
-			id: book.id.toString(),
-			title: book.title,
-			author: book.author || undefined,
-			readableTitle: book.readableTitle || book.title,
-			source: book.source,
-			coverImageUrl: book.coverImageUrl || undefined,
-			sourceUrl: book.sourceUrl || undefined,
-			readwiseUrl: book.readwiseUrl,
-			category: book.category || undefined,
-			tags: book.bookTags.map((bt) => formatTagDisplayName(bt.tag.name)),
-			highlights: book.highlights.map((highlight) => ({
-				id: highlight.id.toString(),
-				text: highlight.text,
-				note: highlight.note || undefined,
-				location: highlight.location || undefined,
-				highlightedAt:
-					highlight.highlightedAt?.toISOString() || new Date().toISOString(),
-				tags: highlight.tags.map((ht) => formatTagDisplayName(ht.tag.name)),
-			})),
-		}
-
-		return transformedBook
+		// null only when no row matches; database errors propagate.
+		return book ? toCommonplaceBook(book) : null
 	} catch (error) {
-		console.error('Error fetching commonplace book by ID:', error)
-		return null
+		console.error('Error fetching commonplace book by slug:', error)
+		throw error
 	}
 }

@@ -132,17 +132,15 @@ export function CommonplaceItem({
 
 			{book.tags.length > 0 && (
 				<div className="mt-6 flex flex-wrap gap-2">
-					{book.tags
-						.filter((tag) => tag.toLowerCase() !== '@share')
-						.map((tag, index, filteredTags) => (
-							<Link
-								key={tag}
-								href={`/commonplace?tags=${tag}`}
-								className="inline-block text-xs text-muted-foreground no-underline hover:text-foreground"
-							>
-								#{tag.replace(/\s+/g, '-')}
-							</Link>
-						))}
+					{book.tags.map((tag) => (
+						<Link
+							key={tag.name}
+							href={`/commonplace?tags=${encodeURIComponent(tag.name)}`}
+							className="inline-block text-xs text-muted-foreground no-underline hover:text-foreground"
+						>
+							#{tag.name}
+						</Link>
+					))}
 				</div>
 			)}
 		</article>

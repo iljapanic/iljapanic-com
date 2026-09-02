@@ -1,15 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { validateApiKey, createUnauthorizedResponse } from '@/app/api/api-auth'
 import { getCommonplaceData } from '@/app/actions/commonplace'
 
 export async function GET(request: NextRequest) {
-	console.log('API route called')
-
-	// Simple API key validation (you should use a proper secret)
-	const apiKey = request.headers.get('Authorization')?.replace('Bearer ', '')
-	const validApiKey = process.env.COMMONPLACE_API_KEY
-
-	if (!validApiKey || apiKey !== validApiKey) {
-		return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+	if (!validateApiKey(request)) {
+		return createUnauthorizedResponse()
 	}
 
 	try {
@@ -21,8 +16,6 @@ export async function GET(request: NextRequest) {
 		const selectedTags = tagsParam
 			? tagsParam.split('|').filter((tag) => tag.trim())
 			: []
-
-		console.log('API called with params:', { page, selectedTags })
 
 		const data = await getCommonplaceData(page, selectedTags)
 

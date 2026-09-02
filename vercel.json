@@ -1,0 +1,8 @@
+{
+	"crons": [
+		{
+			"path": "/api/cron/readwise-sync",
+			"schedule": "0 0 * * *"
+		}
+	]
+}

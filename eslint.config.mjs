@@ -22,6 +22,5 @@ export default defineConfig([
 		'.obsidian/**',
 		'content/.obsidian/**',
 		'content/.vault-nickname/**',
-		'prisma/generated/**',
 	]),
 ])
