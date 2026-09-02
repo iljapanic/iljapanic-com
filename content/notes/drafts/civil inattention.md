@@ -1,5 +1,5 @@
 ---
-createdAt: 2025-04-17
+publishedAt: 2025-04-17
 updatedAt: 2025-04-17
 ---
 

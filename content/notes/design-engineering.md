@@ -6,7 +6,6 @@ keywords:
   - design engineering
   - software design
 isPublished: true
-createdAt: 2024-04-29
 isFeatured: true
 ---
 

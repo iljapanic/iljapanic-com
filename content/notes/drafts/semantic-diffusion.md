@@ -1,8 +1,6 @@
 ---
 title: semantic diffusion
 subtitle: phonenetic
-type: garden
-createdAt: 2025-03-25
 publishedAt: 2025-03-25
 updatedAt: 2025-04-09
 isPublished: false

@@ -1,6 +1,6 @@
 ---
 title: LLMs as Clay
-createdAt: 2025-05-19
+publishedAt: 2025-05-19
 updatedAt: 2025-05-19
 ---
 I like to think of LLM outputs as clay.

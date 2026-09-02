@@ -7,7 +7,6 @@ keywords:
   - knowledge management
   - productivity
 isPublished: true
-createdAt: 2023-05-16
 updatedAt: 2025-05-09
 isFeatured: true
 ---

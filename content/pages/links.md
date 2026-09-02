@@ -2,7 +2,7 @@
 title: Links
 subtitle: People whose work inspires me
 isPublished: true
-createdAt: 2023-05-16
+publishedAt: 2023-05-16
 updatedAt: 2025-12-25
 ---
 

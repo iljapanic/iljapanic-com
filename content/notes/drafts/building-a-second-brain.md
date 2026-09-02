@@ -7,9 +7,9 @@ keywords:
   - Networked thought
   - Personal knowledge management
 path: /notes/2021/building-a-second-brain
-date: 2021-02-09
-updated: 2021-02-09
-published: true
+publishedAt: 2021-02-09
+updatedAt: 2021-02-09
+isPublished: true
 ---
 
 We've all been there. You got hundreds of notes that you've been pilling up for years in a disjointed array of apps and tools. Some of you probably use Microsoft Word or Pages to capture your thoughts. I understand, ability to organize documents within your own filesystem is liberating. Unfortunately, such approach breaks as your collection grows. Sooner or later you inevitably loose sense of where is what. Furthermore, it doesn't allow you to see the connection between all those great ideas you had over the years.

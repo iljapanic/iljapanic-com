@@ -4,7 +4,6 @@ publishedAt: 2025-05-19
 updatedAt: 2025-05-19
 isPublished: false
 isFeatured: false
-createdAt: 2025-05-19
 ---
 
 

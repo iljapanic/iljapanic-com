@@ -4,7 +4,6 @@ publishedAt: 2025-06-01
 updatedAt: 2025-06-01
 isPublished: false
 isFeatured: false
-createdAt: 2025-06-01
 ---
 
 Also referred to as *ambient computing*

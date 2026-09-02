@@ -1,5 +1,5 @@
 ---
-createdAt: 2025-04-18
+publishedAt: 2025-04-18
 updatedAt: 2025-05-16
 ---
 > *The Overton window is the range of policies politically acceptable to the mainstream population at a given time. It is also known as the window of discourse.* 

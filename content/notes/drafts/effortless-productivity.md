@@ -4,7 +4,6 @@ publishedAt: 2025-06-08
 updatedAt: 2025-06-08
 isPublished: false
 isFeatured: false
-createdAt: 2025-06-08
 ---
 
 I’m guilty of productivity porn as much as the other
